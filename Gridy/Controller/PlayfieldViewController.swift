@@ -19,19 +19,16 @@ class PlayfieldViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     
     //MARK: - Properties
-    //    var gamePieceCell = UICollectionViewCell()
-    //    var playFieldCell = UICollectionViewCell()
     
     var score = Int()
     
     var selectedImage = UIImage()
-    var returnImage = [UIImage]()
+    var baseImage = [UIImage]()
     
     var counter = 0
     
     var blipPlayer: AVAudioPlayer? = nil
     var bloopPlayer: AVAudioPlayer? = nil
-    
     
     
     private lazy var gamePieceDataSource: PieceDataSource = {
@@ -44,12 +41,12 @@ class PlayfieldViewController: UIViewController {
             for row in 0...3 {
                 let locX = CGFloat(row) * cropWidth
                 let locY = CGFloat(col) * cropHeight
-                returnImage.append(selectedImage.cropToBounds(posX: locX, posY: locY, width: cropWidth, height: cropHeight))
+                baseImage.append(selectedImage.cropToBounds(posX: locX, posY: locY, width: cropWidth, height: cropHeight))
                 counter = counter + 1
             }
         }
                 
-        return PieceDataSource(pieceCollection: returnImage.shuffled())
+        return PieceDataSource(pieceCollection: baseImage.shuffled())
     }()
     private lazy var playFieldDataSource: PieceDataSource = {
         //        return PieceDataSource(pieceCollection: [selectedImage])
@@ -78,6 +75,9 @@ class PlayfieldViewController: UIViewController {
         scoreLabel.text = "\(score)"
         imageView.image = selectedImage
         imageView.isHidden = true
+        
+        let cornerRadius = CGFloat(12)
+        newGameButton.layer.cornerRadius = cornerRadius
         
         self.blipPlayer = self.loadSound(filename: "blip")
         self.bloopPlayer = self.loadSound(filename: "bloop")
@@ -114,6 +114,36 @@ class PlayfieldViewController: UIViewController {
         }, completion: {[weak self] ended in
             self?.imageView.isHidden = true
         })
+    }
+    
+    
+    // MARK: - Check if dataSource = base image, if true handle game over event
+    
+    func checkIfGameOver(dataSource: PieceDataSource) {
+        if dataSource.pieceCollection == baseImage {
+            handleGameOver()
+        }
+    }
+    
+    func handleGameOver() {
+        gamePieceView.dragInteractionEnabled = false
+        playfieldView.dragInteractionEnabled = false
+
+        
+        gamePieceView.isHidden = true
+        quickViewButton.isHidden = true
+                
+        imageView.isHidden = false
+        imageView.image = UIImage(named: "GameOver")
+        
+        imageView.alpha = 1
+        UIView.animate(withDuration: 4.0, delay: 0.0, options: [.curveEaseOut], animations: {
+            self.imageView.alpha = 0
+        }, completion: {[weak self] ended in
+            self?.imageView.isHidden = true
+        })
+        
+        
     }
 }
 

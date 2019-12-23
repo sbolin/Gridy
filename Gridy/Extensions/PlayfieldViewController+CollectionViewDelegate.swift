@@ -33,3 +33,4 @@ extension PlayfieldViewController: UICollectionViewDelegate {
         return UIEdgeInsets(top: 3.0, left: 3.0, bottom: 3.0, right: 3.0)
     }
 }
+// control-command-space: brings up the 😀 keyboard

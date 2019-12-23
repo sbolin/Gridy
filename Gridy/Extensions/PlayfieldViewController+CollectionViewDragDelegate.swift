@@ -31,7 +31,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate {
             else { return }
         let dataSource = dataSourceForCollectionView(collectionView)
         let sourceIndexPath = dragCoordinator.sourceIndexPath
-        collectionView.performBatchUpdates({
+        collectionView.performBatchUpdates({            
             dataSource.deleteItem(at: sourceIndexPath.item)
             collectionView.deleteItems(at: [sourceIndexPath])
         })

@@ -19,7 +19,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
 
             let width = (collectionView.frame.width-leftAndRightPaddings) / numberOfItemsPerRow
             let height = width
-            let cellSize = CGSize(width: width , height: height)
+            let cellSize = CGSize(width: width, height: height)
             return cellSize
         } else {
             let leftAndRightPaddings: CGFloat = 12.0
@@ -27,7 +27,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
 
             let width = (collectionView.frame.width-leftAndRightPaddings) / numberOfItemsPerRow
             let height = width
-            let cellSize = CGSize(width: width , height: height)
+            let cellSize = CGSize(width: width, height: height)
             return cellSize
         }
     }
@@ -38,5 +38,10 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2.0
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
+        return false
     }
 }

@@ -145,9 +145,9 @@
 			isa = PBXGroup;
 			children = (
 				155F8F1923923E760001A2AA /* UIImage+Crop.swift */,
+				155F8F1D2392BF460001A2AA /* PlayfieldViewController+CollectionViewDelegate.swift */,
 				1596B42723AA3E960038C0B9 /* PlayfieldViewController+CollectionViewDragDelegate.swift */,
 				1596B42923AA3F3E0038C0B9 /* PlayfieldViewController+CollectionViewDropDelegate.swift */,
-				155F8F1D2392BF460001A2AA /* PlayfieldViewController+CollectionViewDelegate.swift */,
 				155F8F1F2392BF920001A2AA /* PlayfieldViewController+CollectionViewDelegateFlowLayout.swift */,
 			);
 			path = Extensions;

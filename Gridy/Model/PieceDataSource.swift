@@ -13,7 +13,7 @@ import UIKit
 class PieceDataSource: NSObject, UICollectionViewDataSource {
     
     //MARK: - Properties
-    private var pieceCollection: [UIImage]
+    var pieceCollection: [UIImage]
     
     //MARK: - Initialization
     init(pieceCollection: [UIImage]) {
@@ -26,16 +26,15 @@ class PieceDataSource: NSObject, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PieceCell", for: indexPath)
-        
-        
-        if let cell = cell as? PieceCell {
-            let item = pieceCollection[indexPath.item]
-            cell.pieceImage.image = item
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PieceCell", for: indexPath) as? PieceCell else {
+            fatalError("Cell cannot be created")
         }
+        
+        let item = pieceCollection[indexPath.item]
+        cell.pieceImage.image = item
         cell.backgroundColor = .white
         cell.layer.masksToBounds = true
-        cell.layer.cornerRadius = 2
+        cell.layer.cornerRadius = 3
         return cell
         
     }
@@ -51,13 +50,17 @@ extension PieceDataSource {
         return [dragItem]
     }
     
+// MARK: - DataSource Helper functions
     func addItem(_ newItem: UIImage, at index: Int) {
         pieceCollection.insert(newItem, at: index)
     }
     
+    func deleteItem(at sourceIndex: Int) {
+        pieceCollection.remove(at: sourceIndex)
+    }
+    
     func moveItem(at sourceIndex: Int, to destinationIndex: Int) {
         guard sourceIndex != destinationIndex else { return }
-        
         let item = pieceCollection[sourceIndex]
         pieceCollection.insert(item, at: destinationIndex)
         pieceCollection.remove(at: sourceIndex)
@@ -65,14 +68,7 @@ extension PieceDataSource {
     
     func swapItem(at sourceIndex: Int, to destinationIndex: Int) {
         guard sourceIndex != destinationIndex else { return }
-        
-//        let sourceItem = pieceCollection[sourceIndex]
-//        let destinationItem = pieceCollection[destinationIndex]
         pieceCollection.swapAt(sourceIndex, destinationIndex)
-    }
-    
-    func deleteItem(at sourceIndex: Int) {
-        pieceCollection.remove(at: sourceIndex)
     }
     
     func getItemAtIndex(indexPath: Int) -> UIImage? {

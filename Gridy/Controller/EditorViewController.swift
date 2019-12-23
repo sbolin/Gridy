@@ -178,7 +178,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func resetTapped(_ sender: UIButton) {
-        print("resetPosition Button tapped")
         selectedImage.transform = selectedImage.transform.translatedBy(x: -currentPostion.x, y: -currentPostion.y)
     }
     @IBAction func newPictureTapped(_ sender: UIButton) {

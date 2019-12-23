@@ -11,8 +11,6 @@ import UIKit
 // MARK: - UICollectionViewDropDelegate
 extension PlayfieldViewController: UICollectionViewDropDelegate {
     
-
-    
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         let dataSource = dataSourceForCollectionView(collectionView)
         let destinationIndexPath: IndexPath
@@ -30,19 +28,16 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
             guard let dragCoordinator = coordinator.session.localDragSession?.localContext as? PieceDragCoordinator else { return }
             if let sourceIndexPath = item.sourceIndexPath {
                 print("Moving within the same collectionView...")
-
+                
                 dragCoordinator.isReordering = true
                 collectionView.performBatchUpdates({
-//                    dataSource.moveItem(at: sourceIndexPath.item, to: destinationIndexPath.item)
-//                    collectionView.deleteItems(at: [sourceIndexPath])
-//                    collectionView.insertItems(at: [destinationIndexPath])
                     dataSource.swapItem(at: sourceIndexPath.item, to: destinationIndexPath.item)
                     collectionView.moveItem(at: sourceIndexPath, to: destinationIndexPath)
                     collectionView.moveItem(at: destinationIndexPath, to: sourceIndexPath)
-//                    collectionView.reloadData()
-
+                    
                     self.bloopPlayer?.play()
                     addToScore()
+                    checkIfGameOver(dataSource: dataSource)
                 })
             } else {
                 print("Moving between collection views")
@@ -64,6 +59,7 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
                         collectionView.insertItems(at: [destinationIndexPath])
                         self.bloopPlayer?.play()
                         addToScore()
+                        checkIfGameOver(dataSource: dataSource)
                     })
                 }
             }

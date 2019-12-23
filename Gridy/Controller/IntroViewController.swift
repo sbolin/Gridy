@@ -155,7 +155,7 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     
     func collectLocalImageSet() {
         localImages.removeAll()
-        let imageNames = ["photo_01", "photo_02", "photo_03", "photo_04", "photo_05", "photo_06"]
+        let imageNames = ["photo_01", "photo_02", "photo_03", "photo_04", "photo_05", "photo_06", "photo_07"]
         
         for name in imageNames {
             if let image = UIImage.init(named: name) {
