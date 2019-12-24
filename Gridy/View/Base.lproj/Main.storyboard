@@ -22,11 +22,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="top" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="pt9-ES-21W" userLabel="TitleStack">
-                                <rect key="frame" x="-5.3333333333333428" y="84" width="385.66666666666674" height="190"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" axis="vertical" distribution="equalCentering" alignment="top" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="pt9-ES-21W" userLabel="TitleStack">
+                                <rect key="frame" x="12" y="84" width="351" height="190"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hnL-83-qUg">
-                                        <rect key="frame" x="0.0" y="0.0" width="385.66666666666669" height="195"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="195"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="195" id="dEM-wm-U6Z"/>
                                         </constraints>
@@ -35,7 +35,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challenge yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QJk-7K-Z9O">
-                                        <rect key="frame" x="0.0" y="170" width="250.33333333333334" height="20"/>
+                                        <rect key="frame" x="0.0" y="170" width="250" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="ndu-xp-utk"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="rFg-aC-ynh"/>
@@ -62,6 +62,9 @@
                                                 <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="32"/>
                                                 <state key="normal" title="Gridy">
                                                     <color key="titleColor" name="#114B5F"/>
+                                                </state>
+                                                <state key="selected">
+                                                    <color key="titleColor" name="#88D498"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="gridyPickTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1ec-7E-bAi"/>
@@ -102,6 +105,9 @@
                                                         <state key="normal" image="Gridy-camera-green">
                                                             <color key="titleColor" name="#114B5F"/>
                                                         </state>
+                                                        <state key="selected">
+                                                            <color key="titleColor" name="#88D498"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="cameraPickTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qVv-TZ-48e"/>
                                                         </connections>
@@ -128,6 +134,9 @@
                                                         <state key="normal" image="Gridy-library-green">
                                                             <color key="titleColor" name="#114B5F"/>
                                                         </state>
+                                                        <state key="selected">
+                                                            <color key="titleColor" name="#88D498"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="photoLibraryPickTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Gf-yX-YXK"/>
                                                         </connections>
@@ -149,8 +158,10 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="67l-Xd-NdE" secondAttribute="bottom" constant="20" id="F9L-aL-PFj"/>
                             <constraint firstItem="67l-Xd-NdE" firstAttribute="top" secondItem="pt9-ES-21W" secondAttribute="bottom" constant="64" id="FWk-HH-veH"/>
-                            <constraint firstItem="pt9-ES-21W" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Fdp-1h-8GI"/>
+                            <constraint firstItem="pt9-ES-21W" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RZk-HH-Psg"/>
+                            <constraint firstItem="pt9-ES-21W" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="12" id="irb-py-T3U"/>
                             <constraint firstItem="67l-Xd-NdE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pp0-j5-iv2"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pt9-ES-21W" secondAttribute="trailing" constant="12" id="rYv-O3-kgp"/>
                             <constraint firstItem="pt9-ES-21W" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="tVd-Q4-ezR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -253,7 +264,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82a-Fe-ifF">
-                                <rect key="frame" x="91.333333333333329" y="88" width="192.33333333333337" height="40.666666666666657"/>
+                                <rect key="frame" x="91.333333333333314" y="88" width="192.33333333333337" height="40.666666666666657"/>
                                 <string key="text">Adjust the puzzle image: 
 zoom, rotate, reposition</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -431,7 +442,7 @@ zoom, rotate, reposition</string>
                                 <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="SRn-4F-Ge6">
-                                <rect key="frame" x="89.000000000000014" y="275" width="197.33333333333337" height="36"/>
+                                <rect key="frame" x="89" y="275" width="197.33333333333337" height="36"/>
                                 <string key="text">Drag pieces to the grid
 swipe out of the grid to undo</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -460,6 +471,21 @@ swipe out of the grid to undo</string>
                                     <constraint firstAttribute="width" secondItem="muU-ik-IQ6" secondAttribute="height" multiplier="1:1" id="1eP-7c-SfV"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0P-pq-Jti">
+                                <rect key="frame" x="137.66666666666666" y="744" width="100" height="48"/>
+                                <color key="backgroundColor" name="#88D498"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="E9v-4g-3YA"/>
+                                    <constraint firstAttribute="height" constant="48" id="ejM-Pj-JOR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <state key="normal" title="Share">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareButtonTapped:" destination="KTy-LY-mOt" eventType="touchUpInside" id="QVs-c8-PL6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -467,9 +493,11 @@ swipe out of the grid to undo</string>
                             <constraint firstItem="a9X-u6-3eR" firstAttribute="top" secondItem="SRn-4F-Ge6" secondAttribute="bottom" constant="6" id="6hK-Zs-YG5"/>
                             <constraint firstItem="muU-ik-IQ6" firstAttribute="trailing" secondItem="Sbz-2Q-hiz" secondAttribute="trailing" id="8bZ-Ak-7r4"/>
                             <constraint firstItem="C2U-kh-gdm" firstAttribute="leading" secondItem="n2A-9f-ryq" secondAttribute="leading" constant="16" id="E9U-8r-tek"/>
+                            <constraint firstItem="D0P-pq-Jti" firstAttribute="centerX" secondItem="aB2-0z-n0z" secondAttribute="centerX" id="GHs-PC-D10"/>
                             <constraint firstItem="muU-ik-IQ6" firstAttribute="bottom" secondItem="Sbz-2Q-hiz" secondAttribute="bottom" id="HcY-ql-mJt"/>
                             <constraint firstItem="aiX-Fj-kJO" firstAttribute="bottom" secondItem="fmq-Qt-so4" secondAttribute="bottom" constant="-8" id="L1d-ed-1Kf"/>
                             <constraint firstItem="Sbz-2Q-hiz" firstAttribute="leading" secondItem="n2A-9f-ryq" secondAttribute="leading" constant="16" id="Lwn-2P-5mJ"/>
+                            <constraint firstAttribute="bottom" secondItem="D0P-pq-Jti" secondAttribute="bottom" constant="20" id="YEt-ha-BSf"/>
                             <constraint firstItem="Sbz-2Q-hiz" firstAttribute="top" secondItem="C2U-kh-gdm" secondAttribute="bottom" constant="8" id="d7E-5U-Jyv"/>
                             <constraint firstItem="C2U-kh-gdm" firstAttribute="top" secondItem="n2A-9f-ryq" secondAttribute="top" constant="8" id="fbd-sh-MB1"/>
                             <constraint firstItem="aiX-Fj-kJO" firstAttribute="trailing" secondItem="fmq-Qt-so4" secondAttribute="trailing" constant="-8" id="gjS-Iq-qRa"/>
@@ -488,6 +516,7 @@ swipe out of the grid to undo</string>
                         <outlet property="playfieldView" destination="a9X-u6-3eR" id="pfh-QS-Ckq"/>
                         <outlet property="quickViewButton" destination="aiX-Fj-kJO" id="WJp-gI-JdC"/>
                         <outlet property="scoreLabel" destination="yJq-Bv-nyd" id="Lrg-MR-x1Q"/>
+                        <outlet property="shareButton" destination="D0P-pq-Jti" id="OzD-yn-yZv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dQw-Zi-BkF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

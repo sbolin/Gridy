@@ -17,6 +17,7 @@ class PlayfieldViewController: UIViewController {
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var quickViewButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
     
     //MARK: - Properties
     
@@ -45,14 +46,14 @@ class PlayfieldViewController: UIViewController {
                 counter = counter + 1
             }
         }
-                
+        
         return PieceDataSource(pieceCollection: baseImage.shuffled())
     }()
     private lazy var playFieldDataSource: PieceDataSource = {
         //        return PieceDataSource(pieceCollection: [selectedImage])
         guard let blankImage = UIImage(named: "Blank") else { return PieceDataSource(pieceCollection: []) }
         let blankPieceCollection = [UIImage](repeating: blankImage, count: 16)
-                
+        
         return PieceDataSource(pieceCollection: blankPieceCollection)
     }()
     
@@ -75,6 +76,8 @@ class PlayfieldViewController: UIViewController {
         scoreLabel.text = "\(score)"
         imageView.image = selectedImage
         imageView.isHidden = true
+        shareButton.isHidden = true
+        shareButton.isEnabled = false
         
         let cornerRadius = CGFloat(12)
         newGameButton.layer.cornerRadius = cornerRadius
@@ -103,7 +106,7 @@ class PlayfieldViewController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    // MARK: - Show full pic, then fade out
+    // MARK: - Show hint pic, then fade out
     @IBAction func quickViewTapped(_ sender: UIButton) {
         imageView.isHidden = false
         imageView.image = selectedImage
@@ -116,34 +119,81 @@ class PlayfieldViewController: UIViewController {
         })
     }
     
+    //MARK: Handle Share at end of game
+    @IBAction func shareButtonTapped(_ sender: UIButton) {
+        displaySharingOptions(sender: sender)
+    }
     
-    // MARK: - Check if dataSource = base image, if true handle game over event
+    func displaySharingOptions(sender: Any) {
+        // define and prepare content to share
+        let note = "Puzzle Solved in \(score) moves!"
+        let image = composeShareImage()
+        let items = [image as Any, note as Any]
+        
+        // create activity view controller
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        // limit share to messages, email
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTencentWeibo]
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFlickr]
+        
+        // bandaid for iPad
+        activityViewController.popoverPresentationController?.sourceView = sender as? UIView
+        
+        // present activity view controller
+        present(activityViewController, animated: true, completion: nil)
+    }
     
+    func composeShareImage() -> UIImage {
+//        UIGraphicsGetCurrentContext()
+//        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+        
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        let image = renderer.image { ctx in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+
+ //       view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+    
+ //       let imageToShare = UIGraphicsGetImageFromCurrentImageContext()!
+//        let imageToShare = selectedImage
+//        UIGraphicsEndImageContext()
+//        return imageToShare
+        return image
+    }
+    
+    // MARK: - Game Over Check
+    // check if dataSource is the same as baseImage, handle game over if true
     func checkIfGameOver(dataSource: PieceDataSource) {
         if dataSource.pieceCollection == baseImage {
+            print("passed game over check")
             handleGameOver()
         }
     }
     
+    // handle game over event
     func handleGameOver() {
+        print("in handlegameover function")
+        shareButton.isHidden = false
+        shareButton.layer.cornerRadius = 12.0
+        shareButton.isEnabled = true
         gamePieceView.dragInteractionEnabled = false
         playfieldView.dragInteractionEnabled = false
-
         
-        gamePieceView.isHidden = true
+//        gamePieceView.isHidden = true
         quickViewButton.isHidden = true
-                
+        
         imageView.isHidden = false
         imageView.image = UIImage(named: "GameOver")
         
         imageView.alpha = 1
-        UIView.animate(withDuration: 4.0, delay: 0.0, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.imageView.alpha = 0
         }, completion: {[weak self] ended in
             self?.imageView.isHidden = true
         })
-        
-        
     }
 }
 
