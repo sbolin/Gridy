@@ -133,11 +133,11 @@ class PlayfieldViewController: UIViewController {
         // create activity view controller
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         // limit share to messages, email
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTencentWeibo]
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFlickr]
+//        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
+//        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
+//        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
+//        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTencentWeibo]
+//        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFlickr]
         
         // bandaid for iPad
         activityViewController.popoverPresentationController?.sourceView = sender as? UIView
@@ -147,20 +147,17 @@ class PlayfieldViewController: UIViewController {
     }
     
     func composeShareImage() -> UIImage {
-//        UIGraphicsGetCurrentContext()
-//        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+
         
-        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+//        let renderer = UIGraphicsImageRenderer(size: super.view.bounds.size)
+//        let image = renderer.image { ctx in
+//            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+//        }
+        let renderer = UIGraphicsImageRenderer(size: playfieldView.bounds.size)
         let image = renderer.image { ctx in
-            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+            playfieldView.drawHierarchy(in: playfieldView.bounds, afterScreenUpdates: true)
         }
 
- //       view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
-    
- //       let imageToShare = UIGraphicsGetImageFromCurrentImageContext()!
-//        let imageToShare = selectedImage
-//        UIGraphicsEndImageContext()
-//        return imageToShare
         return image
     }
     
