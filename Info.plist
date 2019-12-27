@@ -61,8 +61,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) Needs access to your Photo Library is needed to select pictures to include in Gridy.</string>
+	<string>$(PRODUCT_NAME) Needs access to your Photo Library to select pictures to include in Gridy.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) Needs access to your Photo Library Additons to share pictures in Gridy.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) Needs access to your Camera is needed to take pictures to include in Gridy.</string>
+	<string>$(PRODUCT_NAME) Needs access to your Camera to take pictures to include in Gridy.</string>
 </dict>
 </plist>
