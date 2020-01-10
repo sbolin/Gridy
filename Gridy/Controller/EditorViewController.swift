@@ -13,7 +13,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var gridView: Gridview!
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var resetViewButton: UIButton!
     @IBOutlet weak var newPictureButton: UIButton!
     

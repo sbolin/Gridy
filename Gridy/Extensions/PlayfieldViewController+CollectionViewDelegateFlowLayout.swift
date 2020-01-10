@@ -13,6 +13,7 @@ import UIKit
 extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        
         if (collectionView == gamePieceView) {
             let leftAndRightPaddings: CGFloat = 16.0
             let numberOfItemsPerRow: CGFloat = 6.0

@@ -15,12 +15,16 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         let dataSource = dataSourceForCollectionView(collectionView)
         let destinationIndexPath: IndexPath
         if let indexPath = coordinator.destinationIndexPath {
+            if indexPath.item > 15 { return }
+            print("Drop at location")
             destinationIndexPath = indexPath // drop at location
         } else {
-            destinationIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0), section: 0)
+            print("Drop at end of collectionView")
+            destinationIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0) - 1, section: 0)
             // drop at end of collectionView if no drop location
         }
         
+        let blankImage = UIImage(named: "Blank")
         
         let item = coordinator.items[0] // select the first drag item
         switch coordinator.proposal.operation {
@@ -42,17 +46,19 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
             } else {
                 print("Moving between collection views")
                 
-                if let destinationDataSource = playfieldView.dataSource as? PieceDataSource,
-                    let image = destinationDataSource.getItemAtIndex(indexPath: destinationIndexPath.item),
-                    let blankImage = UIImage(named: "Blank")  {
+//                if let destinationDataSource = playfieldView.dataSource as? PieceDataSource,
+                if let destinationDataSource = collectionView.dataSource as? PieceDataSource,
+                    let image = destinationDataSource.getItemAtIndex(indexPath: destinationIndexPath.item) {
                     if !image.isEqual(blankImage) {
                         print("Moving to existing image, don't move")
-                        return }
+                        return
+                    }
                 }
                 
                 dragCoordinator.isReordering = false
                 if let piece = item.dragItem.localObject as? UIImage {
                     collectionView.performBatchUpdates({
+                        if destinationIndexPath.item > 15 { return }
                         dataSource.deleteItem(at: destinationIndexPath.item) // added
                         dataSource.addItem(piece, at: destinationIndexPath.item)
                         collectionView.deleteItems(at: [destinationIndexPath]) // added
@@ -72,12 +78,12 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         guard session.localDragSession != nil else {
-            return UICollectionViewDropProposal(operation: .cancel)
+            return UICollectionViewDropProposal(operation: .forbidden)
         }
         guard session.items.count == 1 else {
-            return UICollectionViewDropProposal(operation: .cancel)
+            return UICollectionViewDropProposal(operation: .forbidden)
         }
-        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        return UICollectionViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
     }
     
     func addToScore() {
@@ -86,4 +92,13 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
     }
 }
 
+/*
+From Peter Molnar to Everyone: (02:06 PM)
+
+https://stackoverflow.com/questions/38894031/swift-how-to-detect-orientation-changes
+
+From Peter Molnar to Everyone: (02:56 PM)
+
+UICollectionViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
+*/
 
