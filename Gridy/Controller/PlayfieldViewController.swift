@@ -108,9 +108,19 @@ class PlayfieldViewController: UIViewController {
             
             // Your code here
         }
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            if UIDevice.current.model.hasPrefix("iPad") {
+                 print("iPad")
+            } else {
+                 print("not an iPad")
+            }
+        } else {
+            print("Portrait")
+        }
+        
     }
-    
-    
+
     
     
     // MARK: - Navigation
