@@ -15,8 +15,12 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
         
         
         if (collectionView == gamePieceView) {
+            var numberOfItemsPerRow: CGFloat = 6.0
             let leftAndRightPaddings: CGFloat = 16.0
-            let numberOfItemsPerRow: CGFloat = 6.0
+            
+            if UIDevice.current.orientation.isLandscape {
+                numberOfItemsPerRow = 4.0
+            }
 
             let width = (collectionView.frame.width-leftAndRightPaddings) / numberOfItemsPerRow
             let height = width

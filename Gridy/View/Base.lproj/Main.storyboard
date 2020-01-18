@@ -261,10 +261,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="R0y-ct-cIt" userLabel="Button Stack">
-                                <rect key="frame" x="248" y="302" width="316" height="48"/>
+                                <rect key="frame" x="64" y="123.66666666666669" width="684" height="128"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWD-cy-eCh">
-                                        <rect key="frame" x="0.0" y="16" width="100" height="32"/>
+                                        <rect key="frame" x="584" y="0.0" width="100" height="32"/>
                                         <color key="backgroundColor" name="#88D498"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="BLG-cb-2lu"/>
@@ -280,7 +280,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ott-de-Rt1">
-                                        <rect key="frame" x="108" y="0.0" width="100" height="48"/>
+                                        <rect key="frame" x="584" y="39.999999999999986" width="100" height="48"/>
                                         <color key="backgroundColor" name="#88D498"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lYC-0s-Mlg"/>
@@ -295,7 +295,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dA9-1n-b1e">
-                                        <rect key="frame" x="216" y="16" width="100" height="32"/>
+                                        <rect key="frame" x="584" y="95.999999999999986" width="100" height="32"/>
                                         <color key="backgroundColor" name="#88D498"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Cm6-8F-491"/>
@@ -310,10 +310,11 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
                                 <variation key="heightClass=regular-widthClass=compact" spacing="4"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82a-Fe-ifF">
-                                <rect key="frame" x="310" y="88" width="192.33333333333337" height="40.666666666666657"/>
+                                <rect key="frame" x="600" y="19.999999999999996" width="192.33333333333337" height="40.666666666666657"/>
                                 <string key="text">Adjust the puzzle image: 
 zoom, rotate, reposition</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -324,19 +325,43 @@ zoom, rotate, reposition</string>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="trailing" secondItem="Ef3-d1-JBx" secondAttribute="trailing" id="5Zs-kX-M7Y"/>
-                            <constraint firstItem="82a-Fe-ifF" firstAttribute="centerX" secondItem="Ef3-d1-JBx" secondAttribute="centerX" id="BV6-fx-Yqn"/>
+                            <constraint firstItem="R0y-ct-cIt" firstAttribute="centerY" secondItem="Ef3-d1-JBx" secondAttribute="centerY" id="6xN-tU-yeI"/>
+                            <constraint firstItem="82a-Fe-ifF" firstAttribute="centerX" secondItem="Ef3-d1-JBx" secondAttribute="centerX" id="BV6-fx-Yqn">
+                                <variation key="heightClass=compact-widthClass=compact" constant="290"/>
+                            </constraint>
+                            <constraint firstItem="6Pg-KX-0oi" firstAttribute="trailing" secondItem="R0y-ct-cIt" secondAttribute="trailing" constant="20" id="Llj-ni-vGj"/>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" id="MAT-a0-lae"/>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="leading" secondItem="Ef3-d1-JBx" secondAttribute="leading" id="MZP-0T-8to"/>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="bottom" secondItem="Ef3-d1-JBx" secondAttribute="bottom" id="TLE-N1-nWU"/>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="bottom" secondItem="Ef3-d1-JBx" secondAttribute="bottom" id="XfF-KF-fgP"/>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="leading" secondItem="Ef3-d1-JBx" secondAttribute="leading" id="Ynp-mH-16Q"/>
-                            <constraint firstItem="R0y-ct-cIt" firstAttribute="bottom" secondItem="6Pg-KX-0oi" secondAttribute="bottom" constant="-4" id="YvH-PZ-UNZ"/>
                             <constraint firstItem="R0y-ct-cIt" firstAttribute="centerX" secondItem="Ef3-d1-JBx" secondAttribute="centerX" id="aGI-he-6XO"/>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="trailing" secondItem="Ef3-d1-JBx" secondAttribute="trailing" id="cBk-3t-7hU"/>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" id="ecm-cv-tAG"/>
-                            <constraint firstItem="82a-Fe-ifF" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" constant="88" id="xOK-O2-sFY"/>
+                            <constraint firstItem="6Pg-KX-0oi" firstAttribute="bottom" secondItem="R0y-ct-cIt" secondAttribute="bottom" constant="8" id="fTE-s3-4jm"/>
+                            <constraint firstItem="82a-Fe-ifF" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" constant="88" id="xOK-O2-sFY">
+                                <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                            </constraint>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Pg-KX-0oi"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Llj-ni-vGj"/>
+                                <exclude reference="fTE-s3-4jm"/>
+                                <exclude reference="6xN-tU-yeI"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="Llj-ni-vGj"/>
+                                <include reference="6xN-tU-yeI"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="fTE-s3-4jm"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="H8W-Gr-M4m"/>
                     <connections>
