@@ -21,6 +21,11 @@ class Gridview: UIView {
     let vgrid2Path = UIBezierPath()
     let vgrid3Path = UIBezierPath()
     
+    var innerWindowWidth: CGFloat = 0.0
+    var innerWindowDepth: CGFloat = 0.0
+    var innerWindowTop: CGFloat = 0.0
+    var innerWindowBottom: CGFloat = 0.0
+    
     override func draw(_ rect: CGRect)
     {
         // General Declarations
@@ -28,20 +33,34 @@ class Gridview: UIView {
         let backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
         
         // Variable Declarations
-        let leading: CGFloat = 20
+        var leading: CGFloat = 20
+        var trailing: CGFloat = leading
         
         // pass in proper frame
         let screenWidth: CGFloat = self.frame.width
         let screenHeight: CGFloat = self.frame.height
-        let innerWindowWidth = screenWidth - 2 * leading
-        let innerWindowDepth = innerWindowWidth
-        let innerWindowTop: CGFloat = (screenHeight - innerWindowDepth) / 2.0
-        let innerWindowBottom: CGFloat = screenHeight - (screenHeight - innerWindowDepth) / 2.0
+        
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            innerWindowDepth = screenHeight - 2 * leading
+            innerWindowWidth = innerWindowDepth
+            innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
+            innerWindowBottom = screenHeight - (screenHeight - innerWindowDepth) / 2.0
+            leading = (screenWidth - innerWindowWidth) / 2.0
+            trailing = leading
+        } else {
+            print("Portrait")
+            innerWindowWidth = screenWidth - 2 * leading
+            innerWindowDepth = innerWindowWidth
+            innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
+            innerWindowBottom = screenHeight - (screenHeight - innerWindowDepth) / 2.0
+        }
+        
         
         let hgrid1y: CGFloat = innerWindowTop + innerWindowDepth / 4.0
         let hgrid2y: CGFloat = innerWindowTop + innerWindowDepth / 2.0
         let hgrid3y: CGFloat = innerWindowTop + 3 * innerWindowDepth / 4.0
-        let trailing: CGFloat = leading
+
         let innerWindowRight: CGFloat = screenWidth - trailing
         let innerWindowLeft: CGFloat = leading
         let vgrid1x: CGFloat = leading + innerWindowWidth / 4.0
@@ -64,7 +83,7 @@ class Gridview: UIView {
         
         // Outer window
         windowPath.move(to: CGPoint(x: screenWidth, y: 0))
-        windowPath.addCurve(to: CGPoint(x: screenWidth, y: screenHeight), controlPoint1: CGPoint(x: screenWidth, y: 0), controlPoint2: CGPoint(x: screenWidth, y: screenHeight))
+        windowPath.addLine(to: CGPoint(x: screenWidth, y: screenHeight))
         windowPath.addLine(to: CGPoint(x: 0, y: screenHeight))
         windowPath.addLine(to: CGPoint(x: 0, y: 0))
         windowPath.addLine(to: CGPoint(x: screenWidth, y: 0))
