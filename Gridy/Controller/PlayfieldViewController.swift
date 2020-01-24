@@ -105,8 +105,7 @@ class PlayfieldViewController: UIViewController {
         flowLayout.invalidateLayout()
         
         coordinator.animate(alongsideTransition: nil) { _ in
-            
-            // Your code here
+
         }
         if UIDevice.current.orientation.isLandscape {
             print("Landscape")
@@ -118,10 +117,8 @@ class PlayfieldViewController: UIViewController {
         } else {
             print("Portrait")
         }
-        
     }
 
-    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

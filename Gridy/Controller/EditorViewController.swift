@@ -38,7 +38,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         configure()
         setBlurView()
-        gridViewStatus()
+//        gridViewStatus()
+        view.setNeedsDisplay()
     }
     
     func configure() {
@@ -61,10 +62,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         pinchGestureRecognizer.cancelsTouchesInView = true
         pinchGestureRecognizer.delegate = self
         selectedImage.addGestureRecognizer(pinchGestureRecognizer)
-        
-        //  mark: hide gridView on setup to allow tap gestures to register
-        gridViewStatus()
-        
+//        gridViewStatus()
     }
     
     func setBlurView() {
@@ -94,13 +92,71 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         blurView.layer.mask = maskLayer
     }
     
-    func gridViewStatus() {
-        gridView.isHidden = !gridView.isHidden
-        gridView.isOpaque = !gridView.isOpaque
+//    func gridViewStatus() {
+//        gridView.isHidden = !gridView.isHidden
+//        gridView.isOpaque = !gridView.isOpaque
+//    }
+    
+    func composeCreationImage() -> UIImage {
+        
+        // set up screen capture size
+        let xloc = -gridView.innerWindowPath.minX - 2
+        let yloc = -gridView.innerWindowPath.minY - 2
+        let clipSize = gridView.innerWindowPath.size
+        let contextSize = view.bounds.size
+        let rectSize = CGRect(x: xloc, y: yloc, width: contextSize.width + 4, height: contextSize.height + 4)
+        
+        // set up screen capture image
+        UIGraphicsBeginImageContextWithOptions(clipSize, false, 0)
+        view.drawHierarchy(in: rectSize, afterScreenUpdates: true)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return screenshot
+    }
+    
+    // MARK: - Handle Rotation Transition
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+      
+//        gridView.setNeedsLayout()
+        selectedImage.setNeedsDisplay()
+        gridView.setNeedsDisplay()
+        setBlurView()
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toGame" {
+            let destinationVC = segue.destination as! PlayfieldViewController
+            destinationVC.selectedImage = imageToPlay
+        }
+    }
+    
+    // MARK: - GestureRecognizers
+    @objc func rotateImageView(sender: UIRotationGestureRecognizer) {
+        selectedImage.transform = selectedImage.transform.rotated(by: sender.rotation)
+        sender.rotation = 0
+    }
+    
+    @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
+        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        sender.scale = 1.0
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // conditions for simulanious gestures
+        if gestureRecognizer.view != selectedImage {
+            return false
+        }
+        // neither of the recognized gestures should be a tap gesture
+        if gestureRecognizer is UITapGestureRecognizer
+            || otherGestureRecognizer is UITapGestureRecognizer {
+            return false
+        }
+        return true
     }
     
     //MARK: - GestureRecognizer functions
-    
     @objc func moveImageView(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: selectedImage.superview)
         
@@ -140,40 +196,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    @objc func rotateImageView(sender: UIRotationGestureRecognizer) {
-        selectedImage.transform = selectedImage.transform.rotated(by: sender.rotation)
-        sender.rotation = 0
-    }
-    
-    @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
-        sender.scale = 1.0
-    }
-    
-    @IBAction func resetPostion(_ sender: UIButton) {
-        selectedImage.transform = selectedImage.transform.translatedBy(x: -currentPostion.x, y: -currentPostion.y)
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // conditions for simulanious gestures
-        if gestureRecognizer.view != selectedImage {
-            return false
-        }
-        // neither of the recognized gestures should be a tap gesture
-        if gestureRecognizer is UITapGestureRecognizer
-            || otherGestureRecognizer is UITapGestureRecognizer {
-            return false
-        }
-        return true
-    }
-    
+    //MARK: - Actions
     @IBAction func startTapped(_ sender: UIButton) {
         imageToPlay = composeCreationImage()
         performSegue(withIdentifier: "toGame", sender: self)
-    }
-    
-    @IBAction func closeTapped(_ sender: UIButton) {
-        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func resetTapped(_ sender: UIButton) {
@@ -181,30 +207,5 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     @IBAction func newPictureTapped(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func composeCreationImage() -> UIImage {
-        
-        // set up screen capture size
-        let xloc = -gridView.innerWindowPath.minX - 2
-        let yloc = -gridView.innerWindowPath.minY - 2
-        let clipSize = gridView.innerWindowPath.size
-        let contextSize = view.bounds.size
-        let rectSize = CGRect(x: xloc, y: yloc, width: contextSize.width + 4, height: contextSize.height + 4)
-        
-        // set up screen capture image
-        UIGraphicsBeginImageContextWithOptions(clipSize, false, 0)
-        view.drawHierarchy(in: rectSize, afterScreenUpdates: true)
-        let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return screenshot
-    }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toGame" {
-            let destinationVC = segue.destination as! PlayfieldViewController
-            destinationVC.selectedImage = imageToPlay
-        }
     }
 }

@@ -25,6 +25,8 @@ class Gridview: UIView {
     var innerWindowDepth: CGFloat = 0.0
     var innerWindowTop: CGFloat = 0.0
     var innerWindowBottom: CGFloat = 0.0
+    var innerWindowRight: CGFloat = 0.0
+    var innerWindowLeft: CGFloat = 0.0
     
     override func draw(_ rect: CGRect)
     {
@@ -33,39 +35,40 @@ class Gridview: UIView {
         let backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
         
         // Variable Declarations
-        var leading: CGFloat = 20
-        var trailing: CGFloat = leading
+        var leadingOffset: CGFloat = 20
+        var trailingOffset: CGFloat = leadingOffset
         
         // pass in proper frame
         let screenWidth: CGFloat = self.frame.width
         let screenHeight: CGFloat = self.frame.height
         
-        if UIDevice.current.orientation.isLandscape {
+        if screenWidth > screenHeight {
             print("Landscape")
-            innerWindowDepth = screenHeight - 2 * leading
+            innerWindowDepth = screenHeight - 2 * leadingOffset
             innerWindowWidth = innerWindowDepth
-            innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
-            innerWindowBottom = screenHeight - (screenHeight - innerWindowDepth) / 2.0
-            leading = (screenWidth - innerWindowWidth) / 2.0
-            trailing = leading
+            innerWindowTop = leadingOffset
+            innerWindowBottom = screenHeight - trailingOffset
+            leadingOffset = (screenWidth - innerWindowWidth) / 2.0
+            trailingOffset = leadingOffset
+            
         } else {
             print("Portrait")
-            innerWindowWidth = screenWidth - 2 * leading
+            innerWindowWidth = screenWidth - 2 * leadingOffset
             innerWindowDepth = innerWindowWidth
             innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
             innerWindowBottom = screenHeight - (screenHeight - innerWindowDepth) / 2.0
         }
-        
+        innerWindowRight = screenWidth - trailingOffset
+        innerWindowLeft = leadingOffset
         
         let hgrid1y: CGFloat = innerWindowTop + innerWindowDepth / 4.0
         let hgrid2y: CGFloat = innerWindowTop + innerWindowDepth / 2.0
         let hgrid3y: CGFloat = innerWindowTop + 3 * innerWindowDepth / 4.0
 
-        let innerWindowRight: CGFloat = screenWidth - trailing
-        let innerWindowLeft: CGFloat = leading
-        let vgrid1x: CGFloat = leading + innerWindowWidth / 4.0
-        let vgrid2x: CGFloat = leading + innerWindowWidth / 2.0
-        let vgrid3x: CGFloat = leading + 3 * innerWindowWidth / 4.0
+
+        let vgrid1x: CGFloat = leadingOffset + innerWindowWidth / 4.0
+        let vgrid2x: CGFloat = leadingOffset + innerWindowWidth / 2.0
+        let vgrid3x: CGFloat = leadingOffset + 3 * innerWindowWidth / 4.0
         
         // window Drawing
         // Inner window
@@ -94,26 +97,27 @@ class Gridview: UIView {
         //        windowPath.stroke()
         windowPath.close()
         
+        
         // Draw Grids
         // hgrid1 Drawing
-        hgrid1Path.move(to: CGPoint(x: leading, y: hgrid1y))
-        hgrid1Path.addLine(to: CGPoint(x: innerWindowWidth + leading, y: hgrid1y))
+        hgrid1Path.move(to: CGPoint(x: leadingOffset, y: hgrid1y))
+        hgrid1Path.addLine(to: CGPoint(x: innerWindowWidth + leadingOffset, y: hgrid1y))
         UIColor.darkGray.setStroke()
         hgrid1Path.lineWidth = 0.5
         hgrid1Path.stroke()
         hgrid1Path.close()
         
         // hgrid2 Drawing
-        hgrid2Path.move(to: CGPoint(x: leading, y: hgrid2y))
-        hgrid2Path.addLine(to: CGPoint(x: innerWindowWidth + leading, y: hgrid2y))
+        hgrid2Path.move(to: CGPoint(x: leadingOffset, y: hgrid2y))
+        hgrid2Path.addLine(to: CGPoint(x: innerWindowWidth + leadingOffset, y: hgrid2y))
         UIColor.darkGray.setStroke()
         hgrid2Path.lineWidth = 0.5
         hgrid2Path.stroke()
         hgrid2Path.close()
         
         // hgrid3 Drawing
-        hgrid3Path.move(to: CGPoint(x: leading, y: hgrid3y))
-        hgrid3Path.addLine(to: CGPoint(x: innerWindowWidth + leading, y: hgrid3y)) //not sure why need to add 20
+        hgrid3Path.move(to: CGPoint(x: leadingOffset, y: hgrid3y))
+        hgrid3Path.addLine(to: CGPoint(x: innerWindowWidth + leadingOffset, y: hgrid3y)) //not sure why need to add 20
         UIColor.darkGray.setStroke()
         hgrid3Path.lineWidth = 0.5
         hgrid3Path.stroke()
