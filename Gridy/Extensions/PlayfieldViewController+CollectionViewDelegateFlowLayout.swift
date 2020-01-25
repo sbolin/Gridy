@@ -14,36 +14,27 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if (collectionView == gamePieceView) {
-            var numberOfItemsPerRow: CGFloat = 6.0
-            var leftAndRightPaddings: CGFloat = 16.0
-            var width = (collectionView.frame.width-leftAndRightPaddings) / numberOfItemsPerRow
-            var height = width
-            
-            if view.frame.width > view.frame.height {
-                print("gamePieceView is landscape")
-                numberOfItemsPerRow = 3.0
-                leftAndRightPaddings = 12.0
-                height = (collectionView.frame.height - leftAndRightPaddings) / numberOfItemsPerRow
-                width = height
-            }
-            print("gamePieceView cell size is width = \(width) x height = \(height)")
-            let gamePieceCellSize = CGSize(width: width, height: height)
-            return gamePieceCellSize
+          let maxGamePiece: CGFloat = 6.0
+          let minGamePiece: CGFloat = 3.0
+          let gamePiecePadding: CGFloat = 16.0
+          let gamePieceViewDim1: CGFloat = collectionView.frame.width - gamePiecePadding
+          let gamePieceViewDim2: CGFloat = collectionView.frame.height - gamePiecePadding
+
+          let minDim = (gamePieceViewDim1 < gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2)
+          let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2)
+          let cellDim = minDim / minGamePiece < maxDim / maxGamePiece ? minDim / minGamePiece : maxDim / maxGamePiece
+          let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
+          return gamePieceCellSize
         } else {
-            let leftAndRightPaddings: CGFloat = 12.0
-            let numberOfItemsPerRow: CGFloat = 4.0
-            
-            var width = (collectionView.frame.width-leftAndRightPaddings) / numberOfItemsPerRow
-            var height = width
-            
-            if view.frame.width > view.frame.height {
-                print("playfieldView is landscape")
-                height = (collectionView.frame.height - leftAndRightPaddings) / numberOfItemsPerRow
-                width = height
-            }
-            print("playfieldView cell size is width = \(width) x height = \(height)")
-            let playfieldCellSize = CGSize(width: width, height: height)
-            return playfieldCellSize
+          let gamePiece: CGFloat = 4.0
+          let gamePiecePadding: CGFloat = 8.0
+          let playFieldViewDim1: CGFloat = collectionView.frame.width - gamePiecePadding
+          let playFieldViewDim2: CGFloat = collectionView.frame.height - gamePiecePadding
+          let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2)
+          let maxDim = (playFieldViewDim1 > playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2)
+          let cellDim = minDim / gamePiece
+          let playFieldCellSize = CGSize(width: cellDim, height: cellDim)
+          return playFieldCellSize
         }
     }
     
