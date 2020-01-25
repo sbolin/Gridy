@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 
+
 class PlayfieldViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var gamePieceView: UICollectionView!
@@ -101,12 +102,10 @@ class PlayfieldViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        guard let flowLayout = playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        flowLayout.invalidateLayout()
-        
         coordinator.animate(alongsideTransition: nil) { _ in
 
         }
+        
         if UIDevice.current.orientation.isLandscape {
             print("Landscape")
             if UIDevice.current.model.hasPrefix("iPad") {
@@ -118,6 +117,20 @@ class PlayfieldViewController: UIViewController {
             print("Portrait")
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("viewDidLayoutSubviews")
+        guard let flowLayout = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        flowLayout.invalidateLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("viewWillAppear")
+    }
+    
+
 
     
     // MARK: - Navigation
