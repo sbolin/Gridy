@@ -163,7 +163,6 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
             }
         }
     }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     }
     

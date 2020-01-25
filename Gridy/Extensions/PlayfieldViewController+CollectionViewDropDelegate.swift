@@ -91,14 +91,3 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         scoreLabel.text = "\(score)"
     }
 }
-
-/*
-From Peter Molnar to Everyone: (02:06 PM)
-
-https://stackoverflow.com/questions/38894031/swift-how-to-detect-orientation-changes
-
-From Peter Molnar to Everyone: (02:56 PM)
-
-UICollectionViewDropProposal(operation: .move, intent: .insertIntoDestinationIndexPath)
-*/
-

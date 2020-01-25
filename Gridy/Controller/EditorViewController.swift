@@ -33,16 +33,17 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         startButton.layer.cornerRadius = cornerRadius
         resetViewButton.layer.cornerRadius = cornerRadius
         newPictureButton.layer.cornerRadius = cornerRadius
-
+        
         selectedImage.image = passedImage
         
-        configure()
+        configureGestureRecognizer()
         setBlurView()
-//        gridViewStatus()
+        //        gridViewStatus()
+        view.setNeedsLayout()
         view.setNeedsDisplay()
     }
     
-    func configure() {
+    func configureGestureRecognizer() {
         
         // create pan gesture recognizer
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(sender:)))
@@ -62,7 +63,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         pinchGestureRecognizer.cancelsTouchesInView = true
         pinchGestureRecognizer.delegate = self
         selectedImage.addGestureRecognizer(pinchGestureRecognizer)
-//        gridViewStatus()
+        //        gridViewStatus()
     }
     
     func setBlurView() {
@@ -92,10 +93,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         blurView.layer.mask = maskLayer
     }
     
-//    func gridViewStatus() {
-//        gridView.isHidden = !gridView.isHidden
-//        gridView.isOpaque = !gridView.isOpaque
-//    }
+//        func gridViewStatus() {
+//            gridView.isHidden = !gridView.isHidden
+//            gridView.isOpaque = !gridView.isOpaque
+//        }
     
     func composeCreationImage() -> UIImage {
         
@@ -117,11 +118,16 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Handle Rotation Transition
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-      
-//        gridView.setNeedsLayout()
-        selectedImage.setNeedsDisplay()
+
+        resetView()
+        view.setNeedsLayout()
+        view.setNeedsDisplay()
+        
+        gridView.setNeedsLayout()
         gridView.setNeedsDisplay()
-        setBlurView()
+        selectedImage.setNeedsLayout()
+        selectedImage.setNeedsDisplay()
+//        setBlurView()
     }
     
     // MARK: - Navigation
@@ -171,7 +177,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             let maxX = gridView.innerWindowPath.maxX
             let minY = gridView.innerWindowPath.minY
             let maxY = gridView.innerWindowPath.maxY
-
+            
             var finalPoint = CGPoint(x: sender.view!.center.x, y: sender.view!.center.y)
             
             // get original image size
@@ -179,17 +185,17 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                 selectedImagePixelWidth = panImage.size.width
                 selectedImagePixelHeight = panImage.size.height
             }
-
+            
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
             let selectedImageScaledHeight = selectedImage.frame.height
             let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
-
+            
             if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
             if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
             if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
             if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
-
+            
             UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
                            animations: { sender.view!.center = finalPoint },
                            completion: nil)
@@ -207,5 +213,13 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     @IBAction func newPictureTapped(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func resetView() {
+        let parent = view.superview
+        view.removeFromSuperview()
+        view = nil
+//        setBlurView()
+        parent?.addSubview(view)
     }
 }

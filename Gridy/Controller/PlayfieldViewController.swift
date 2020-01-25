@@ -48,8 +48,8 @@ class PlayfieldViewController: UIViewController {
         
         return PieceDataSource(pieceCollection: baseImage.shuffled())
     }()
+    
     private lazy var playFieldDataSource: PieceDataSource = {
-        //        return PieceDataSource(pieceCollection: [selectedImage])
         guard let blankImage = UIImage(named: "Blank") else { return PieceDataSource(pieceCollection: []) }
         let blankPieceCollection = [UIImage](repeating: blankImage, count: 16)
         return PieceDataSource(pieceCollection: blankPieceCollection)
@@ -153,9 +153,7 @@ class PlayfieldViewController: UIViewController {
         let image = composeShareImage()
         let items = [image as Any, note as Any]
         
-        // create activity view controller
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        // limit share to messages, email
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
