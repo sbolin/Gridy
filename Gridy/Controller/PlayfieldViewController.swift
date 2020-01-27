@@ -101,7 +101,7 @@ class PlayfieldViewController: UIViewController {
 //    MARK: Handle iPad landscape view
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+        print("viewWillTransition:to")
         coordinator.animate(alongsideTransition: nil) { _ in
 
         }
@@ -121,17 +121,13 @@ class PlayfieldViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         print("viewDidLayoutSubviews")
-        guard let flowLayout = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        flowLayout.invalidateLayout()
+        
+        guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        playfieldFlow.invalidateLayout()
+        
+        guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        gamePieceFlow.invalidateLayout()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print("viewWillAppear")
-    }
-    
-
-
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

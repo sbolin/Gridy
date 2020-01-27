@@ -26,10 +26,10 @@
                                 <rect key="frame" x="8" y="177.33333333333334" width="359" height="457.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" axis="vertical" distribution="equalCentering" alignment="top" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="pt9-ES-21W" userLabel="TitleStack">
-                                        <rect key="frame" x="3" y="0.0" width="353.33333333333331" height="190"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="190"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Gridy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hnL-83-qUg">
-                                                <rect key="frame" x="0.0" y="0.0" width="353.33333333333331" height="195"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="195"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="195" id="dEM-wm-U6Z">
                                                         <variation key="heightClass=compact" constant="175"/>
@@ -299,7 +299,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" spacing="4"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82a-Fe-ifF">
-                                <rect key="frame" x="91.333333333333329" y="19.999999999999996" width="192.33333333333337" height="40.666666666666657"/>
+                                <rect key="frame" x="91.333333333333329" y="52" width="192.33333333333337" height="40.666666666666657"/>
                                 <string key="text">Adjust the puzzle image: 
 zoom, rotate, reposition</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -325,7 +325,7 @@ zoom, rotate, reposition</string>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="trailing" secondItem="Ef3-d1-JBx" secondAttribute="trailing" id="cBk-3t-7hU"/>
                             <constraint firstItem="3h1-Yj-IC9" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" id="ecm-cv-tAG"/>
                             <constraint firstItem="6Pg-KX-0oi" firstAttribute="bottom" secondItem="R0y-ct-cIt" secondAttribute="bottom" constant="8" id="fTE-s3-4jm"/>
-                            <constraint firstItem="82a-Fe-ifF" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" constant="20" id="xOK-O2-sFY">
+                            <constraint firstItem="82a-Fe-ifF" firstAttribute="top" secondItem="6Pg-KX-0oi" secondAttribute="top" constant="8" id="xOK-O2-sFY">
                                 <variation key="heightClass=compact-widthClass=compact" constant="20"/>
                             </constraint>
                         </constraints>
@@ -440,11 +440,11 @@ zoom, rotate, reposition</string>
                                             <size key="itemSize" width="56" height="56"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PieceCell" id="e4B-pg-gBd" customClass="PieceCell" customModule="Gridy" customModuleProvider="target">
-                                                <rect key="frame" x="2" y="2" width="56" height="56"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AFb-eQ-vMP">
                                                     <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
@@ -577,11 +577,11 @@ zoom, rotate, reposition</string>
                                             <size key="itemSize" width="84" height="84"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="PieceCell" id="rts-qy-mhU" customClass="PieceCell" customModule="Gridy" customModuleProvider="target">
-                                                <rect key="frame" x="2" y="2" width="84" height="84"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LBo-bX-92V">
                                                     <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
@@ -638,7 +638,7 @@ zoom, rotate, reposition</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Final Score: 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3n-NS-TTG">
-                                <rect key="frame" x="20" y="478.66666666666669" width="339" height="52.000000000000057"/>
+                                <rect key="frame" x="20" y="481.33333333333331" width="339" height="46.666666666666686"/>
                                 <fontDescription key="fontDescription" name="TimeBurner" family="TimeBurner" pointSize="40"/>
                                 <color key="textColor" name="#1A936F"/>
                                 <nil key="highlightedColor"/>
