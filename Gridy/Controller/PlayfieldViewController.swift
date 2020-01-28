@@ -124,7 +124,7 @@ class PlayfieldViewController: UIViewController {
         
         guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         playfieldFlow.invalidateLayout()
-        
+
         guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         gamePieceFlow.invalidateLayout()
     }

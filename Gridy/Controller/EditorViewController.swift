@@ -27,6 +27,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print("EditorViewController: viewDidAppear")
         
         // set up buttons
         let cornerRadius = CGFloat(12)
@@ -34,13 +35,15 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         resetViewButton.layer.cornerRadius = cornerRadius
         newPictureButton.layer.cornerRadius = cornerRadius
         
+        // set up initial picture
         selectedImage.image = passedImage
         
+        // set up gestures
         configureGestureRecognizer()
+        
+        // set up Blurred view
         setBlurView()
-        //        gridViewStatus()
-        view.setNeedsLayout()
-        view.setNeedsDisplay()
+
     }
     
     func configureGestureRecognizer() {
@@ -93,10 +96,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         blurView.layer.mask = maskLayer
     }
     
-//        func gridViewStatus() {
-//            gridView.isHidden = !gridView.isHidden
-//            gridView.isOpaque = !gridView.isOpaque
-//        }
+    //        func gridViewStatus() {
+    //            gridView.isHidden = !gridView.isHidden
+    //            gridView.isOpaque = !gridView.isOpaque
+    //        }
     
     func composeCreationImage() -> UIImage {
         
@@ -118,16 +121,28 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Handle Rotation Transition
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-
-        resetView()
-        view.setNeedsLayout()
-        view.setNeedsDisplay()
         
-        gridView.setNeedsLayout()
-        gridView.setNeedsDisplay()
-        selectedImage.setNeedsLayout()
-        selectedImage.setNeedsDisplay()
-//        setBlurView()
+        print("EditorViewController: viewWillTransition called")
+        resetView()
+        
+        selectedImage.image = passedImage
+        configureGestureRecognizer()
+        
+//        view.setNeedsLayout()
+//        gridView.setNeedsLayout()
+        
+//        view.setNeedsDisplay()
+//        gridView.setNeedsDisplay()
+        setBlurView()
+    }
+    
+    
+    func resetView() {
+        let parent = view.superview
+        view.removeFromSuperview()
+        view = nil
+        parent?.addSubview(view)
+        
     }
     
     // MARK: - Navigation
@@ -213,13 +228,5 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     @IBAction func newPictureTapped(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func resetView() {
-        let parent = view.superview
-        view.removeFromSuperview()
-        view = nil
-//        setBlurView()
-        parent?.addSubview(view)
     }
 }

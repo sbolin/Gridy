@@ -63,12 +63,12 @@ class Gridview: UIView {
         
         let hgrid1y: CGFloat = innerWindowTop + innerWindowDepth / 4.0
         let hgrid2y: CGFloat = innerWindowTop + innerWindowDepth / 2.0
-        let hgrid3y: CGFloat = innerWindowTop + 3 * innerWindowDepth / 4.0
+        let hgrid3y: CGFloat = innerWindowTop + 3.0 * innerWindowDepth / 4.0
 
 
         let vgrid1x: CGFloat = leadingOffset + innerWindowWidth / 4.0
         let vgrid2x: CGFloat = leadingOffset + innerWindowWidth / 2.0
-        let vgrid3x: CGFloat = leadingOffset + 3 * innerWindowWidth / 4.0
+        let vgrid3x: CGFloat = leadingOffset + 3.0 * innerWindowWidth / 4.0
         
         // window Drawing
         // Inner window

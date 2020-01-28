@@ -12,15 +12,22 @@ import UIKit
 
 extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-                
+        
+        let edgeSpacing:CGFloat = 3
+        let pieceSpacing:CGFloat = 3
+        
         if (collectionView == gamePieceView) {
-            let maxGamePiece: CGFloat = 6.0
-            let minGamePiece: CGFloat = 3.0
-            let gamePieceViewDim1: CGFloat = collectionView.frame.width
-            let gamePieceViewDim2: CGFloat = collectionView.frame.height
+            let maxGamePiece: CGFloat = 6
+            let minGamePiece: CGFloat = 3
             
-            let minDim = (gamePieceViewDim1 < gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - 4 * 3
-            let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - 7 * 3
+            let maxSpacing = 2 * edgeSpacing + ((maxGamePiece - 1) * pieceSpacing)
+            let minSpacing = 2 * edgeSpacing + ((minGamePiece - 1) * pieceSpacing)
+            
+            let gamePieceViewDim1: CGFloat = collectionView.bounds.width
+            let gamePieceViewDim2: CGFloat = collectionView.bounds.height
+            
+            let minDim = (gamePieceViewDim1 < gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - minSpacing
+            let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - maxSpacing
             let cellDim = minDim / minGamePiece < maxDim / maxGamePiece ? minDim / minGamePiece : maxDim / maxGamePiece
             let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             print("gamePieceViewDim1: \(gamePieceViewDim1)")
@@ -28,10 +35,13 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             print("gamePieceCellSize: \(gamePieceCellSize)")
             return gamePieceCellSize
         } else {
-            let gamePiece: CGFloat = 4.0
-            let playFieldViewDim1: CGFloat = collectionView.frame.width
-            let playFieldViewDim2: CGFloat = collectionView.frame.height
-            let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - 5 * 3
+            let gamePiece: CGFloat = 4
+            let playFieldViewDim1: CGFloat = collectionView.bounds.width
+            let playFieldViewDim2: CGFloat = collectionView.bounds.height
+            
+            let spacing = (2 * edgeSpacing) + ((gamePiece - 1) * pieceSpacing)
+            
+            let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece
             let playFieldCellSize = CGSize(width: cellDim, height: cellDim)
             print("playFieldViewDim1: \(playFieldViewDim1)")

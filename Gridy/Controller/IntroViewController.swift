@@ -57,6 +57,7 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEditor" {
           let destinationVC = segue.destination as! EditorViewController
+            // pass image to EditorViewController
             destinationVC.passedImage = imageToPass
         }
     }
