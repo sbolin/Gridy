@@ -29,6 +29,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let minDim = (gamePieceViewDim1 < gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - minSpacing
             let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - maxSpacing
             let cellDim = minDim / minGamePiece < maxDim / maxGamePiece ? minDim / minGamePiece : maxDim / maxGamePiece
+            
             let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             print("gamePieceViewDim1: \(gamePieceViewDim1)")
             print("gamePieceViewDim2: \(gamePieceViewDim2)")
@@ -39,7 +40,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let playFieldViewDim1: CGFloat = collectionView.bounds.width
             let playFieldViewDim2: CGFloat = collectionView.bounds.height
             
-            let spacing = (2 * edgeSpacing) + ((gamePiece - 1) * pieceSpacing)
+            let spacing = 2 * edgeSpacing + ((gamePiece - 1) * pieceSpacing)
             
             let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece

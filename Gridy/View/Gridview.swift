@@ -43,7 +43,8 @@ class Gridview: UIView {
         let screenHeight: CGFloat = self.frame.height
         
         if screenWidth > screenHeight {
-            print("Landscape")
+            print("Gridview: Landscape")
+            print("innerWindowPath: \(innerWindowPath)")
             innerWindowDepth = screenHeight - 2 * leadingOffset
             innerWindowWidth = innerWindowDepth
             innerWindowTop = leadingOffset
@@ -52,7 +53,8 @@ class Gridview: UIView {
             trailingOffset = leadingOffset
             
         } else {
-            print("Portrait")
+            print("Gridview: Portrait")
+            print("innerWindowPath: \(innerWindowPath)")
             innerWindowWidth = screenWidth - 2 * leadingOffset
             innerWindowDepth = innerWindowWidth
             innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
@@ -90,12 +92,10 @@ class Gridview: UIView {
         windowPath.addLine(to: CGPoint(x: 0, y: screenHeight))
         windowPath.addLine(to: CGPoint(x: 0, y: 0))
         windowPath.addLine(to: CGPoint(x: screenWidth, y: 0))
-        windowPath.addLine(to: CGPoint(x: screenWidth, y: 0))
         windowPath.close()
         backgroundColor.setFill()
         windowPath.fill()
-        //        windowPath.stroke()
-        windowPath.close()
+
         
         
         // Draw Grids
@@ -127,7 +127,7 @@ class Gridview: UIView {
         vgrid1Path.move(to: CGPoint(x: vgrid1x, y: innerWindowTop))
         vgrid1Path.addLine(to: CGPoint(x: vgrid1x, y: innerWindowBottom))
         UIColor.darkGray.setStroke()
-        vgrid1Path.lineWidth = 1.0
+        vgrid1Path.lineWidth = 0.5
         vgrid1Path.stroke()
         vgrid1Path.close()
         
@@ -135,7 +135,7 @@ class Gridview: UIView {
         vgrid2Path.move(to: CGPoint(x: vgrid2x, y: innerWindowTop))
         vgrid2Path.addLine(to: CGPoint(x: vgrid2x, y: innerWindowBottom))
         UIColor.darkGray.setStroke()
-        vgrid2Path.lineWidth = 1.0
+        vgrid2Path.lineWidth = 0.5
         vgrid2Path.stroke()
         vgrid2Path.close()
         
@@ -143,7 +143,7 @@ class Gridview: UIView {
         vgrid3Path.move(to: CGPoint(x: vgrid3x, y: innerWindowTop))
         vgrid3Path.addLine(to: CGPoint(x: vgrid3x, y: innerWindowBottom))
         UIColor.darkGray.setStroke()
-        vgrid3Path.lineWidth = 1.0
+        vgrid3Path.lineWidth = 0.5
         vgrid3Path.stroke()
         vgrid3Path.close()
     }

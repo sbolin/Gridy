@@ -27,7 +27,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("EditorViewController: viewDidAppear")
+        print("EditorViewController: viewDidAppear \n")
         
         // set up buttons
         let cornerRadius = CGFloat(12)
@@ -43,7 +43,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // set up Blurred view
         setBlurView()
-
+        
     }
     
     func configureGestureRecognizer() {
@@ -72,6 +72,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     func setBlurView() {
         let blurView = UIVisualEffectView()
         blurView.frame = gridView.frame
+        print("1. setBlurView: gridView: \(gridView!)\n")
+        print("2. setBlurView: gridView.innerWindowPath: \(gridView.innerWindowPath)\n")
         
         blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.regular)
         gridView.insertSubview(blurView, at: 0)
@@ -82,6 +84,9 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         let rectY = gridView.innerWindowPath.minY
         let rectWidth = gridView.innerWindowPath.width
         let rectHeight = gridView.innerWindowPath.height
+        
+        print("3. setBlurView: gridView after insertSubview: \(gridView!)\n")
+        print("4. setBlurView: gridView.innerWindowPathafter insertSubview: \(gridView.innerWindowPath)\n")
         
         let rect = UIBezierPath(rect: CGRect(x: rectX, y: rectY, width: rectWidth, height: rectHeight))
         
@@ -94,6 +99,54 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
         
         blurView.layer.mask = maskLayer
+    }
+    
+    // MARK: - Handle Rotation Transition
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        print("EditorViewController: viewWillTransition calle\n")
+//        resetView()
+//
+//        //        selectedImage.image = passedImage
+//
+//        configureGestureRecognizer()
+//
+//        view.setNeedsLayout()
+//        gridView.setNeedsLayout()
+//
+        view.setNeedsDisplay()
+////        gridView.setNeedsDisplay()
+//        setBlurView()
+        
+        // not recalculating gridView after rotations....hmmmmmm
+        
+    }
+    override func viewWillLayoutSubviews() {
+        print("viewWillLayoutSubviews\n")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        print("viewDidLayoutSubviews")
+    }
+    
+    
+    func resetView() {
+        print("resetView\n")
+//                let parent = view.superview
+//                view.removeFromSuperview()
+//                view = nil
+//                parent!.addSubview(gridView)
+//                parent!.addSubview(selectedImage)
+//        // set up initial picture
+//        selectedImage.image = passedImage
+//
+//        // set up gestures
+//        configureGestureRecognizer()
+//
+//        // set up Blurred view
+//        setBlurView()
+        
     }
     
     //        func gridViewStatus() {
@@ -118,32 +171,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         return screenshot
     }
     
-    // MARK: - Handle Rotation Transition
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        print("EditorViewController: viewWillTransition called")
-        resetView()
-        
-        selectedImage.image = passedImage
-        configureGestureRecognizer()
-        
-//        view.setNeedsLayout()
-//        gridView.setNeedsLayout()
-        
-//        view.setNeedsDisplay()
-//        gridView.setNeedsDisplay()
-        setBlurView()
-    }
-    
-    
-    func resetView() {
-        let parent = view.superview
-        view.removeFromSuperview()
-        view = nil
-        parent?.addSubview(view)
-        
-    }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
