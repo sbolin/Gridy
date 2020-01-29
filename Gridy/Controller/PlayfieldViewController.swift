@@ -103,7 +103,13 @@ class PlayfieldViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         print("viewWillTransition:to")
         coordinator.animate(alongsideTransition: nil) { _ in
+            //
+            guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            playfieldFlow.invalidateLayout()
 
+            guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            gamePieceFlow.invalidateLayout()
+            //
         }
         
         if UIDevice.current.orientation.isLandscape {
@@ -116,17 +122,6 @@ class PlayfieldViewController: UIViewController {
         } else {
             print("Portrait")
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print("viewDidLayoutSubviews")
-        
-        guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        playfieldFlow.invalidateLayout()
-
-        guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        gamePieceFlow.invalidateLayout()
     }
     
     // MARK: - Navigation
