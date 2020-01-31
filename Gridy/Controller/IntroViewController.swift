@@ -122,11 +122,13 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     
     func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = sourceType
-        
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+          let imagePicker = UIImagePickerController()
+          imagePicker.delegate = self
+          imagePicker.sourceType = sourceType
+
+          self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

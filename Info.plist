@@ -26,6 +26,10 @@
 	<string>$(PRODUCT_NAME) Needs access to your Photo Library Additons to share pictures in Gridy.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) Needs access to your Photo Library to select pictures to include in Gridy.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>$(PRODUCT_NAME) Needs access to your Media Library to share Gridy Results.</string>
+	<key>NSFileProviderDomainUsageDescription</key>
+	<string>$(PRODUCT_NAME) Needs access to files in order to share Gridy results.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

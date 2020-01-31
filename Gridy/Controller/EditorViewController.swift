@@ -10,6 +10,7 @@ import UIKit
 
 class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var gridView: Gridview!
     @IBOutlet weak var startButton: UIButton!
@@ -24,10 +25,19 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     var passedImage = UIImage()
     var imageToPlay = UIImage()
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("EditorViewController: viewDidAppear \n")
+        
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+        
+//        override func viewDidLayoutSubviews() {
+//          super.viewDidLayoutSubviews()
+            
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+        
+        print("\nEditorViewController: viewDidAppear\n")
         
         // set up buttons
         let cornerRadius = CGFloat(12)
@@ -40,10 +50,11 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // set up gestures
         configureGestureRecognizer()
+//        gridView.setNeedsDisplay()
+//       gridView.layoutIfNeeded()
         
         // set up Blurred view
         setBlurView()
-        
     }
     
     func configureGestureRecognizer() {
@@ -86,7 +97,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         let rectHeight = gridView.innerWindowPath.height
         
         print("3. setBlurView: gridView after insertSubview: \(gridView!)\n")
-        print("4. setBlurView: gridView.innerWindowPathafter insertSubview: \(gridView.innerWindowPath)\n")
+        print("4. setBlurView: gridView.innerWindowPath after insertSubview: \(gridView.innerWindowPath)\n")
         
         let rect = UIBezierPath(rect: CGRect(x: rectX, y: rectY, width: rectWidth, height: rectHeight))
         
@@ -105,31 +116,42 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        print("EditorViewController: viewWillTransition calle\n")
+        print("EditorViewController: viewWillTransition:to called\n")
+        coordinator.animate(alongsideTransition: nil) { _ in
+            
+            self.gridView.layoutIfNeeded()
+//            self.setBlurView()
+            
+            print("EditorViewController: viewWillTransition: coordinator: \(coordinator)")
+            print("EditorViewController: viewWillTransition: size.width: \(size.width)")
+            print("EditorViewController: viewWillTransition: size.height: \(size.height)")
+            print("EditorViewController: viewWillTransition: self.view.frame.size: \(self.view.frame.size)")
+            print("EditorViewController: viewWillTransition: gridView.frame: \(self.gridView.frame))")
+            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.size: \(self.gridView.innerWindowPath.size)")
+            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.minX: \(self.gridView.innerWindowPath.minX)")
+            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.minY: \(self.gridView.innerWindowPath.minY)")
+            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.maxX: \(self.gridView.innerWindowPath.maxX)")
+            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.maxY: \(self.gridView.innerWindowPath.maxY)")
+//
+//            self.mainView.setNeedsLayout()
+//            self.mainView.setNeedsDisplay()
+//            self.mainView.layoutIfNeeded()
+            
+//            self.view.setNeedsLayout()
+//            self.view.setNeedsDisplay()
+//            self.view.layoutIfNeeded()
+//            self.gridView.setNeedsLayout()
+//            self.gridView.setNeedsDisplay()
+//            self.gridView.layoutIfNeeded()
+            
+//            self.setBlurView()
+//
+        }
 //        resetView()
-//
-//        //        selectedImage.image = passedImage
-//
+//        selectedImage.image = passedImage
 //        configureGestureRecognizer()
 //
-//        view.setNeedsLayout()
-//        gridView.setNeedsLayout()
-//
-        view.setNeedsDisplay()
-////        gridView.setNeedsDisplay()
-//        setBlurView()
-        
-        // not recalculating gridView after rotations....hmmmmmm
-        
     }
-    override func viewWillLayoutSubviews() {
-        print("viewWillLayoutSubviews\n")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        print("viewDidLayoutSubviews")
-    }
-    
     
     func resetView() {
         print("resetView\n")

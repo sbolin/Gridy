@@ -32,7 +32,8 @@ class Gridview: UIView {
     {
         // General Declarations
         // Color Declarations
-        let backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+        clearsContextBeforeDrawing = true
+        let backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
         
         // Variable Declarations
         var leadingOffset: CGFloat = 20
@@ -42,10 +43,13 @@ class Gridview: UIView {
         let screenWidth: CGFloat = self.frame.width
         let screenHeight: CGFloat = self.frame.height
         
+        print("Gridview: draw:rect: screenWidth: \(screenWidth)")
+        print("Gridview: draw:rect: screenHeight: \(screenHeight)")
+        
         if screenWidth > screenHeight {
             print("Gridview: Landscape")
-            print("innerWindowPath: \(innerWindowPath)")
-            innerWindowDepth = screenHeight - 2 * leadingOffset
+            print("Gridview: innerWindowPath: \(innerWindowPath)")
+            innerWindowDepth = screenHeight - leadingOffset - trailingOffset
             innerWindowWidth = innerWindowDepth
             innerWindowTop = leadingOffset
             innerWindowBottom = screenHeight - trailingOffset
@@ -54,14 +58,23 @@ class Gridview: UIView {
             
         } else {
             print("Gridview: Portrait")
-            print("innerWindowPath: \(innerWindowPath)")
-            innerWindowWidth = screenWidth - 2 * leadingOffset
+            print("Gridview: innerWindowPath: \(innerWindowPath)")
+            innerWindowWidth = screenWidth - leadingOffset - trailingOffset
             innerWindowDepth = innerWindowWidth
             innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
             innerWindowBottom = screenHeight - (screenHeight - innerWindowDepth) / 2.0
         }
         innerWindowRight = screenWidth - trailingOffset
         innerWindowLeft = leadingOffset
+        
+        print("Gridview: innerWindowLeft: \(innerWindowLeft)")
+        print("Gridview: innerWindowRight: \(innerWindowRight)")
+        print("Gridview: innerWindowTop: \(innerWindowTop)")
+        print("Gridview: innerWindowBottom: \(innerWindowBottom)")
+        print("Gridview: innerWindowDepth: \(innerWindowDepth)")
+        print("Gridview: innerWindowWidth: \(innerWindowWidth)")
+
+
         
         let hgrid1y: CGFloat = innerWindowTop + innerWindowDepth / 4.0
         let hgrid2y: CGFloat = innerWindowTop + innerWindowDepth / 2.0

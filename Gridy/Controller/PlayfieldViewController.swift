@@ -7,13 +7,17 @@
 
 import UIKit
 import AVFoundation
+import LinkPresentation
 
 
+// class PlayfieldViewController: UIViewController, UIActivityItemSource {
 class PlayfieldViewController: UIViewController {
     //MARK: - Outlets
+    
+    @IBOutlet weak var pieceStackView: UIStackView!
+    
     @IBOutlet weak var gamePieceView: UICollectionView!
     @IBOutlet weak var playfieldView: UICollectionView!
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var finalScoreLabel: UILabel!
     @IBOutlet weak var newGameButton: UIButton!
@@ -32,6 +36,13 @@ class PlayfieldViewController: UIViewController {
         
     var blipPlayer: AVAudioPlayer? = nil
     var bloopPlayer: AVAudioPlayer? = nil
+    
+
+    // Sharing items
+   private var shareNote = String()
+   private var shareSubject = String()
+   private var shareImage = UIImage()
+   private var metadata = LPLinkMetadata()
     
     private lazy var gamePieceDataSource: PieceDataSource = {
         let imageWidth = selectedImage.scale * selectedImage.size.width
@@ -112,15 +123,19 @@ class PlayfieldViewController: UIViewController {
             //
         }
         
-        if UIDevice.current.orientation.isLandscape {
-            print("Landscape")
-            if UIDevice.current.model.hasPrefix("iPad") {
-                 print("iPad")
+        if UIDevice.current.model.hasPrefix("iPad") {
+            print("iPad")
+            if UIDevice.current.orientation.isLandscape {
+                print("iPad Landscape")
+                pieceStackView.axis = .horizontal
+                gamePieceView.frame = CGRect(x: 0, y: 0, width: 300, height: view.frame.height - 240)
+                
             } else {
-                 print("not an iPad")
+                print("iPad Portrait")
+ //               pieceStackView.axis = .vertical
             }
         } else {
-            print("Portrait")
+            print("Not an iPad")
         }
     }
     
@@ -146,18 +161,27 @@ class PlayfieldViewController: UIViewController {
         })
     }
     
-    //MARK: Handle Share at end of game
+    //MARK: - Handle Share at end of game
     @IBAction func shareButtonTapped(_ sender: UIButton) {
         displaySharingOptions(sender: sender)
     }
     
     func displaySharingOptions(sender: Any) {
         // define and prepare content to share
-        let note = "Puzzle Solved in \(score) moves!"
-        let image = composeShareImage()
-        let items = [image as Any, note as Any]
+        shareNote = "Gridy Puzzle Solved in \(score) moves!"
+        shareSubject = "Gridy Score!"
+        shareImage = composeShareImage()
         
-        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+ //       metadata.title = shareNote
+ //       metadata.url = URL(fileURLWithPath: "Gridy.io")
+//        metadata.iconProvider = NSItemProvider(contentsOf: Bundle.main.url(forResource: "AppIcon", withExtension: "jpg"))
+//        metadata.imageProvider = NSItemProvider(object: shareImage)
+        
+        let shareItems = [shareImage as Any, shareSubject as Any, shareNote as Any]
+//        let items = [self]
+        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+
+// excluded activity types, if any
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
 //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
@@ -170,6 +194,31 @@ class PlayfieldViewController: UIViewController {
         // present activity view controller
         present(activityViewController, animated: true, completion: nil)
     }
+    
+    // MARK: - Methods to conform to UIActivityItemSource Protocols
+//    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+//        return metadata
+//    }
+//
+//    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+//        if activityType == .postToTwitter {
+//            return "\(shareNote) #GridyApp via @OpenClassrooms"
+//        } else {
+//            return "\(shareNote) GridyApp from OpenClassrooms"
+//        }
+//    }
+//
+//    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+//        return "Gridy Score!"
+//    }
+//
+//    func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType: UIActivity.ActivityType?, suggestedSize: CGSize) -> UIImage? {
+//        return shareImage
+//    }
+//
+//    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+//        return metadata
+//    }
     
     func composeShareImage() -> UIImage {
 
@@ -200,8 +249,10 @@ class PlayfieldViewController: UIViewController {
 
             attributedString1.draw(with: CGRect(x: playfieldView.bounds.minX + 11, y: playfieldView.bounds.midY - 29, width: playfieldView.bounds.width, height: playfieldView.bounds.height), options: .usesLineFragmentOrigin, context: nil)
         }
+        	
+        let composeImage = image.addBorder(border: 6.0, color: UIColor.white)
 
-        return image
+        return composeImage
     }
     
     // MARK: - Game Over Check

@@ -26,6 +26,7 @@
 		1596EA78239B522A002AD485 /* PieceDragCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EA77239B522A002AD485 /* PieceDragCoordinator.swift */; };
 		15AA04A423A4143D00ADD610 /* bloop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15AA04A223A4143D00ADD610 /* bloop.mp3 */; };
 		15AA04A523A4143D00ADD610 /* blip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15AA04A323A4143D00ADD610 /* blip.mp3 */; };
+		15ADE9A723E43B2C003EAF73 /* UIImage+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ADE9A623E43B2C003EAF73 /* UIImage+Border.swift */; };
 		15CD949D237FBB100040AD7C /* timeburnernormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 152DB6752375E1C60085609E /* timeburnernormal.ttf */; };
 		15E6475E2390150500E74F1E /* Gridview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E6475D2390150500E74F1E /* Gridview.swift */; };
 		15E8D6FD23C93A4200A68DEC /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E8D6FC23C93A4200A68DEC /* ConfettiView.swift */; };
@@ -54,6 +55,7 @@
 		1596EA77239B522A002AD485 /* PieceDragCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceDragCoordinator.swift; sourceTree = "<group>"; };
 		15AA04A223A4143D00ADD610 /* bloop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bloop.mp3; path = Assets.xcassets/bloop.mp3; sourceTree = "<group>"; };
 		15AA04A323A4143D00ADD610 /* blip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = blip.mp3; path = Assets.xcassets/blip.mp3; sourceTree = "<group>"; };
+		15ADE9A623E43B2C003EAF73 /* UIImage+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Border.swift"; sourceTree = "<group>"; };
 		15E6475D2390150500E74F1E /* Gridview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridview.swift; sourceTree = "<group>"; };
 		15E8D6FC23C93A4200A68DEC /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +149,7 @@
 		15AA04A623A4C3B900ADD610 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				15ADE9A623E43B2C003EAF73 /* UIImage+Border.swift */,
 				155F8F1923923E760001A2AA /* UIImage+Crop.swift */,
 				155F8F1D2392BF460001A2AA /* PlayfieldViewController+CollectionViewDelegate.swift */,
 				1596B42723AA3E960038C0B9 /* PlayfieldViewController+CollectionViewDragDelegate.swift */,
@@ -240,6 +243,7 @@
 				1596EA78239B522A002AD485 /* PieceDragCoordinator.swift in Sources */,
 				1596B42823AA3E960038C0B9 /* PlayfieldViewController+CollectionViewDragDelegate.swift in Sources */,
 				152DB62D2375C3700085609E /* SceneDelegate.swift in Sources */,
+				15ADE9A723E43B2C003EAF73 /* UIImage+Border.swift in Sources */,
 				152DB67B2375E30C0085609E /* IntroViewController.swift in Sources */,
 				152DB67F2375E85B0085609E /* PlayfieldViewController.swift in Sources */,
 				1596B42A23AA3F3E0038C0B9 /* PlayfieldViewController+CollectionViewDropDelegate.swift in Sources */,
