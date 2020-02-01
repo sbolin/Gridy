@@ -30,10 +30,13 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - maxSpacing
             let cellDim = minDim / minGamePiece < maxDim / maxGamePiece ? minDim / minGamePiece : maxDim / maxGamePiece
             
-            let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
-            print("gamePieceViewDim1: \(gamePieceViewDim1)")
-            print("gamePieceViewDim2: \(gamePieceViewDim2)")
-            print("gamePieceCellSize: \(gamePieceCellSize)")
+            var gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
+            
+            if UIDevice.current.model.hasPrefix("iPad") {
+                if UIDevice.current.orientation.isLandscape {
+                    gamePieceCellSize = CGSize(width: 75, height: 75)
+                }
+            }
             return gamePieceCellSize
         } else {
             let gamePiece: CGFloat = 4
@@ -44,10 +47,12 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             
             let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece
-            let playFieldCellSize = CGSize(width: cellDim, height: cellDim)
-            print("playFieldViewDim1: \(playFieldViewDim1)")
-            print("playFieldViewDim2: \(playFieldViewDim2)")
-            print("playFieldCellSize: \(playFieldCellSize)")
+            var playFieldCellSize = CGSize(width: cellDim, height: cellDim)
+            if UIDevice.current.model.hasPrefix("iPad") {
+                if UIDevice.current.orientation.isLandscape {
+                    playFieldCellSize = CGSize(width: 200, height: 200)
+                }
+            }
             return playFieldCellSize
         }
     }

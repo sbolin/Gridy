@@ -36,7 +36,11 @@ class Gridview: UIView {
         let backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
         
         // Variable Declarations
+        
         var leadingOffset: CGFloat = 20
+        if UIDevice.current.model.hasPrefix("iPad") {
+            leadingOffset = 120
+        }
         var trailingOffset: CGFloat = leadingOffset
         
         // pass in proper frame
