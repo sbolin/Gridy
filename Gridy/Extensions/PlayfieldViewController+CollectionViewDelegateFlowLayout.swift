@@ -34,7 +34,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             
             if UIDevice.current.model.hasPrefix("iPad") {
                 if UIDevice.current.orientation.isLandscape {
-                    gamePieceCellSize = CGSize(width: 75, height: 75)
+                    gamePieceCellSize = CGSize(width: 80, height: 80)
                 }
             }
             return gamePieceCellSize
@@ -50,7 +50,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             var playFieldCellSize = CGSize(width: cellDim, height: cellDim)
             if UIDevice.current.model.hasPrefix("iPad") {
                 if UIDevice.current.orientation.isLandscape {
-                    playFieldCellSize = CGSize(width: 200, height: 200)
+                    playFieldCellSize = CGSize(width: 220, height: 220)
                 }
             }
             return playFieldCellSize

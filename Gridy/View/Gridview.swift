@@ -39,7 +39,7 @@ class Gridview: UIView {
         
         var leadingOffset: CGFloat = 20
         if UIDevice.current.model.hasPrefix("iPad") {
-            leadingOffset = 120
+            leadingOffset = 100
         }
         var trailingOffset: CGFloat = leadingOffset
         

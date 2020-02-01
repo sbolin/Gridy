@@ -10,8 +10,9 @@ import AVFoundation
 import LinkPresentation
 
 
-// class PlayfieldViewController: UIViewController, UIActivityItemSource {
-class PlayfieldViewController: UIViewController {
+class PlayfieldViewController: UIViewController, UIActivityItemSource {
+    
+//class PlayfieldViewController: UIViewController {
     //MARK: - Outlets
     
     @IBOutlet weak var pieceStackView: UIStackView!
@@ -128,8 +129,8 @@ class PlayfieldViewController: UIViewController {
                 if UIDevice.current.orientation.isLandscape {
                     print("iPad Landscape")
                     self.pieceStackView.axis = .horizontal
-                    self.gamePieceView.frame = CGRect(x: 0, y: 0, width: (75 * 3 + 4 * 3), height: (75 * 6 + 7 * 3))
-                    self.playfieldView.frame = CGRect(x: 0, y: 0, width: (200 * 4 + 5 * 3), height: (200 * 4 + 5 * 3))
+                    self.gamePieceView.frame = CGRect(x: 0, y: 0, width: (80 * 3 + 4 * 3), height: (80 * 6 + 7 * 3))
+                    self.playfieldView.frame = CGRect(x: 0, y: 0, width: (220 * 4 + 5 * 3), height: (220 * 4 + 5 * 3))
                 } else {
                     print("iPad Portrait")
                     //               pieceStackView.axis = .vertical
@@ -175,14 +176,14 @@ class PlayfieldViewController: UIViewController {
         shareSubject = "Gridy Score!"
         shareImage = composeShareImage()
         
-        //       metadata.title = shareNote
-        //       metadata.url = URL(fileURLWithPath: "Gridy.io")
-        //        metadata.iconProvider = NSItemProvider(contentsOf: Bundle.main.url(forResource: "AppIcon", withExtension: "jpg"))
-        //        metadata.imageProvider = NSItemProvider(object: shareImage)
+        metadata.title = shareNote
+        metadata.url = URL(fileURLWithPath: "Gridy.io")
+        metadata.iconProvider = NSItemProvider(contentsOf: Bundle.main.url(forResource: "AppIcon", withExtension: "jpg"))
+        metadata.imageProvider = NSItemProvider(object: shareImage)
         
-        let shareItems = [shareImage as Any, shareSubject as Any, shareNote as Any]
-        //        let items = [self]
-        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+ //       let shareItems = [shareImage as Any, shareSubject as Any, shareNote as Any]
+        let items = [self]
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         
         // excluded activity types, if any
         //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
@@ -198,30 +199,29 @@ class PlayfieldViewController: UIViewController {
         present(activityViewController, animated: true, completion: nil)
     }
     
-    // MARK: - Methods to conform to UIActivityItemSource Protocols
-    //    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-    //        return metadata
-    //    }
-    //
-    //    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-    //        if activityType == .postToTwitter {
-    //            return "\(shareNote) #GridyApp via @OpenClassrooms"
-    //        } else {
-    //            return "\(shareNote) GridyApp from OpenClassrooms"
-    //        }
-    //    }
-    //
-    //    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
-    //        return "Gridy Score!"
-    //    }
-    //
-    //    func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType: UIActivity.ActivityType?, suggestedSize: CGSize) -> UIImage? {
-    //        return shareImage
-    //    }
-    //
-    //    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
-    //        return metadata
-    //    }
+// MARK: - Methods to conform to UIActivityItemSource Protocols    
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return metadata
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        if activityType == .postToTwitter {
+            return "\(shareNote) #GridyApp via @OpenClassrooms"
+        } else {
+            return "\(shareNote) GridyApp from OpenClassrooms"
+        }
+    }
+        func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+            return "Gridy Score!"
+        }
+    
+        func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType: UIActivity.ActivityType?, suggestedSize: CGSize) -> UIImage? {
+            return shareImage
+        }
+    
+        func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+            return metadata
+        }
     
     func composeShareImage() -> UIImage {
         
