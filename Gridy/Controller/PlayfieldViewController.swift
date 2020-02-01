@@ -199,9 +199,9 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         present(activityViewController, animated: true, completion: nil)
     }
     
-// MARK: - Methods to conform to UIActivityItemSource Protocols    
+// MARK: - Methods to conform to UIActivityItemSource Protocols
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return metadata
+        return "Gridy!"
     }
     
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
