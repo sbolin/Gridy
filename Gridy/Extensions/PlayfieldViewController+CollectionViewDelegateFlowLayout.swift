@@ -32,11 +32,11 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             
             var gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             
-            if UIDevice.current.model.hasPrefix("iPad") {
-                if UIDevice.current.orientation.isLandscape {
-                    gamePieceCellSize = CGSize(width: 80, height: 80)
-                }
-            }
+//            if UIDevice.current.model.hasPrefix("iPad") {
+//                if UIDevice.current.orientation.isLandscape {
+//                    gamePieceCellSize = CGSize(width: 80, height: 80)
+//                }
+//            }
             return gamePieceCellSize
         } else {
             let gamePiece: CGFloat = 4
@@ -48,11 +48,11 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece
             var playFieldCellSize = CGSize(width: cellDim, height: cellDim)
-            if UIDevice.current.model.hasPrefix("iPad") {
-                if UIDevice.current.orientation.isLandscape {
-                    playFieldCellSize = CGSize(width: 220, height: 220)
-                }
-            }
+//            if UIDevice.current.model.hasPrefix("iPad") {
+//                if UIDevice.current.orientation.isLandscape {
+//                    playFieldCellSize = CGSize(width: 220, height: 220)
+//                }
+//            }
             return playFieldCellSize
         }
     }

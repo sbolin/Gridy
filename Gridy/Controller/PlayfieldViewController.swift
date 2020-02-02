@@ -124,20 +124,20 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
                 //
             }
             // now here
-            if UIDevice.current.model.hasPrefix("iPad") {
-                print("iPad")
-                if UIDevice.current.orientation.isLandscape {
-                    print("iPad Landscape")
-                    self.pieceStackView.axis = .horizontal
-                    self.gamePieceView.frame = CGRect(x: 0, y: 0, width: (80 * 3 + 4 * 3), height: (80 * 6 + 7 * 3))
-                    self.playfieldView.frame = CGRect(x: 0, y: 0, width: (220 * 4 + 5 * 3), height: (220 * 4 + 5 * 3))
-                } else {
-                    print("iPad Portrait")
-                    //               pieceStackView.axis = .vertical
-                }
-            } else {
-                print("Not an iPad")
-            }
+//            if UIDevice.current.model.hasPrefix("iPad") {
+//                print("iPad")
+//                if UIDevice.current.orientation.isLandscape {
+//                    print("iPad Landscape")
+//                    self.pieceStackView.axis = .horizontal
+//                    self.gamePieceView.frame = CGRect(x: 0, y: 0, width: (80 * 3 + 4 * 3), height: (80 * 6 + 7 * 3))
+//                    self.playfieldView.frame = CGRect(x: 0, y: 0, width: (220 * 4 + 5 * 3), height: (220 * 4 + 5 * 3))
+//                } else {
+//                    print("iPad Portrait")
+//                    //               pieceStackView.axis = .vertical
+//                }
+//            } else {
+//                print("Not an iPad")
+//            }
         
         // was here
         
