@@ -17,6 +17,8 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
         let pieceSpacing:CGFloat = 3
         
         if (collectionView == gamePieceView) {
+            print("gamePieceView flow")
+
             let maxGamePiece: CGFloat = 6
             let minGamePiece: CGFloat = 3
             
@@ -30,15 +32,10 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let maxDim = (gamePieceViewDim1 > gamePieceViewDim2 ? gamePieceViewDim1 : gamePieceViewDim2) - maxSpacing
             let cellDim = minDim / minGamePiece < maxDim / maxGamePiece ? minDim / minGamePiece : maxDim / maxGamePiece
             
-            var gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
-            
-//            if UIDevice.current.model.hasPrefix("iPad") {
-//                if UIDevice.current.orientation.isLandscape {
-//                    gamePieceCellSize = CGSize(width: 80, height: 80)
-//                }
-//            }
+            let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             return gamePieceCellSize
         } else {
+            print("playfieldView flow")
             let gamePiece: CGFloat = 4
             let playFieldViewDim1: CGFloat = collectionView.bounds.width
             let playFieldViewDim2: CGFloat = collectionView.bounds.height
@@ -47,12 +44,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             
             let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece
-            var playFieldCellSize = CGSize(width: cellDim, height: cellDim)
-//            if UIDevice.current.model.hasPrefix("iPad") {
-//                if UIDevice.current.orientation.isLandscape {
-//                    playFieldCellSize = CGSize(width: 220, height: 220)
-//                }
-//            }
+            let playFieldCellSize = CGSize(width: cellDim, height: cellDim)
             return playFieldCellSize
         }
     }

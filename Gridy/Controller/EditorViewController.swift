@@ -36,17 +36,18 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-        
-        print("\nEditorViewController: viewDidAppear\n")
-        
+                
         // set up buttons
-        let cornerRadius = CGFloat(12)
+        let cornerRadius = CGFloat(8)
         startButton.layer.cornerRadius = cornerRadius
         resetViewButton.layer.cornerRadius = cornerRadius
         newPictureButton.layer.cornerRadius = cornerRadius
         
         // set up initial picture
         selectedImage.image = passedImage
+        
+        selectedImagePixelWidth = passedImage.size.width
+        selectedImagePixelHeight = passedImage.size.height
         
         // set up gestures
         configureGestureRecognizer()
@@ -83,9 +84,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     func setBlurView() {
         let blurView = UIVisualEffectView()
         blurView.frame = gridView.frame
-        print("1. setBlurView: gridView: \(gridView!)\n")
-        print("2. setBlurView: gridView.innerWindowPath: \(gridView.innerWindowPath)\n")
-        
         blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.regular)
         gridView.insertSubview(blurView, at: 0)
         
@@ -95,10 +93,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         let rectY = gridView.innerWindowPath.minY
         let rectWidth = gridView.innerWindowPath.width
         let rectHeight = gridView.innerWindowPath.height
-        
-        print("3. setBlurView: gridView after insertSubview: \(gridView!)\n")
-        print("4. setBlurView: gridView.innerWindowPath after insertSubview: \(gridView.innerWindowPath)\n")
-        
+                
         let rect = UIBezierPath(rect: CGRect(x: rectX, y: rectY, width: rectWidth, height: rectHeight))
         
         path.append(rect)
@@ -209,7 +204,18 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        
+        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
+        let selectedImageScaledHeight = selectedImage.frame.height
+        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
+        
+        print("gridView: \(gridView.innerWindowPath.width) x \(gridView.innerWindowPath.height)")
+        print("scaled image: \(selectedImageScaledWidth) x \(selectedImageScaledHeight)")
+        
+        
+        if (selectedImageScaledWidth > gridView.innerWindowPath.width) && (selectedImageScaledHeight > gridView.innerWindowPath.height) {
+           selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        }
         sender.scale = 1.0
     }
     
@@ -245,10 +251,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             var finalPoint = CGPoint(x: sender.view!.center.x, y: sender.view!.center.y)
             
             // get original image size
-            if let panImage = selectedImage.image {
-                selectedImagePixelWidth = panImage.size.width
-                selectedImagePixelHeight = panImage.size.height
-            }
+//            if let panImage = selectedImage.image {
+//                selectedImagePixelWidth = panImage.size.width
+//                selectedImagePixelHeight = panImage.size.height
+//            }
             
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight

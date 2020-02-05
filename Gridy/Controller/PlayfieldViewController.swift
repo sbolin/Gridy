@@ -92,7 +92,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         shareButton.isEnabled = false
         confettiView.isHidden = true
         
-        let cornerRadius = CGFloat(12)
+        let cornerRadius = CGFloat(8)
         newGameButton.layer.cornerRadius = cornerRadius
         
         self.blipPlayer = self.loadSound(filename: "blip")
@@ -110,40 +110,20 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         }
     }
     
-    //    MARK: Handle iPad landscape view
+//    MARK: Handle device rotation during play
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         print("viewWillTransition:to")
         coordinator.animate(alongsideTransition: nil) { _ in
-                //
                 guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
                 playfieldFlow.invalidateLayout()
-                
                 guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
                 gamePieceFlow.invalidateLayout()
-                //
             }
-            // now here
-//            if UIDevice.current.model.hasPrefix("iPad") {
-//                print("iPad")
-//                if UIDevice.current.orientation.isLandscape {
-//                    print("iPad Landscape")
-//                    self.pieceStackView.axis = .horizontal
-//                    self.gamePieceView.frame = CGRect(x: 0, y: 0, width: (80 * 3 + 4 * 3), height: (80 * 6 + 7 * 3))
-//                    self.playfieldView.frame = CGRect(x: 0, y: 0, width: (220 * 4 + 5 * 3), height: (220 * 4 + 5 * 3))
-//                } else {
-//                    print("iPad Portrait")
-//                    //               pieceStackView.axis = .vertical
-//                }
-//            } else {
-//                print("Not an iPad")
-//            }
-        
-        // was here
         
     }
     
-    // MARK: - Navigation
+// MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
@@ -165,6 +145,54 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         })
     }
     
+// MARK: - Game Over Check
+    // check if dataSource is the same as baseImage, handle game over if true
+    func checkIfGameOver(dataSource: PieceDataSource) {
+        if dataSource.pieceCollection == baseImage {
+            handleGameOver()
+        }
+    }
+    // handle game over event
+    func handleGameOver() {
+        
+        confettiView.isHidden = false
+        let confetti = ConfettiView()
+        confetti.confettiImage = UIImage(named: "confetti")
+        confetti.translatesAutoresizingMaskIntoConstraints = false
+        confettiView.addSubview(confetti)
+        confetti.clipsToBounds = true
+        
+        shareButton.isHidden = false
+        shareButton.layer.cornerRadius = 12.0
+        shareButton.isEnabled = true
+        gamePieceView.dragInteractionEnabled = false
+        playfieldView.dragInteractionEnabled = false
+        quickViewButton.isHidden = true
+        imageView.isHidden = false
+        imageView.image = UIImage(named: "GameOver")
+        finalScoreLabel.text = "Final Score: \(score)"
+        finalScoreLabel.isHidden = false
+        
+        NSLayoutConstraint.activate([
+            confetti.leadingAnchor.constraint(equalTo: confettiView.leadingAnchor),
+            confetti.trailingAnchor.constraint(equalTo: confettiView.trailingAnchor),
+            confetti.topAnchor.constraint(equalTo: confettiView.topAnchor),
+            confetti.bottomAnchor.constraint(equalTo: confettiView.bottomAnchor)
+        ])
+        
+        imageView.alpha = 1
+        UIView.animate(withDuration: 4.0, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.imageView.alpha = 0
+            self.finalScoreLabel.alpha = 0
+            self.confettiView.alpha = 0
+        }, completion: {[weak self] ended in
+            self?.imageView.isHidden = true
+            self?.finalScoreLabel.isHidden = true
+            self?.confettiView.isHidden = true
+        })
+    }
+    
+    
     //MARK: - Handle Share at end of game
     @IBAction func shareButtonTapped(_ sender: UIButton) {
         displaySharingOptions(sender: sender)
@@ -181,8 +209,8 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         metadata.iconProvider = NSItemProvider(contentsOf: Bundle.main.url(forResource: "AppIcon", withExtension: "jpg"))
         metadata.imageProvider = NSItemProvider(object: shareImage)
         
- //       let shareItems = [shareImage as Any, shareSubject as Any, shareNote as Any]
-        let items = [self]
+        let items = [shareImage as Any, shareSubject as Any, shareNote as Any]
+//        let items = [self]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         
         // excluded activity types, if any
@@ -205,7 +233,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }
     
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        if activityType == .postToTwitter {
+        if activityType == UIActivity.ActivityType.postToTwitter {
             return "\(shareNote) #GridyApp via @OpenClassrooms"
         } else {
             return "\(shareNote) GridyApp from OpenClassrooms"
@@ -256,54 +284,6 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         let composeImage = image.addBorder(border: 6.0, color: UIColor.white)
         
         return composeImage
-    }
-    
-    // MARK: - Game Over Check
-    // check if dataSource is the same as baseImage, handle game over if true
-    func checkIfGameOver(dataSource: PieceDataSource) {
-        if dataSource.pieceCollection == baseImage {
-            handleGameOver()
-        }
-    }
-    
-    // handle game over event
-    func handleGameOver() {
-        
-        confettiView.isHidden = false
-        let confetti = ConfettiView()
-        confetti.confettiImage = UIImage(named: "confetti")
-        confetti.translatesAutoresizingMaskIntoConstraints = false
-        confettiView.addSubview(confetti)
-        confetti.clipsToBounds = true
-        
-        shareButton.isHidden = false
-        shareButton.layer.cornerRadius = 12.0
-        shareButton.isEnabled = true
-        gamePieceView.dragInteractionEnabled = false
-        playfieldView.dragInteractionEnabled = false
-        quickViewButton.isHidden = true
-        imageView.isHidden = false
-        imageView.image = UIImage(named: "GameOver")
-        finalScoreLabel.text = "Final Score: \(score)"
-        finalScoreLabel.isHidden = false
-        
-        NSLayoutConstraint.activate([
-            confetti.leadingAnchor.constraint(equalTo: confettiView.leadingAnchor),
-            confetti.trailingAnchor.constraint(equalTo: confettiView.trailingAnchor),
-            confetti.topAnchor.constraint(equalTo: confettiView.topAnchor),
-            confetti.bottomAnchor.constraint(equalTo: confettiView.bottomAnchor)
-        ])
-        
-        imageView.alpha = 1
-        UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveEaseInOut], animations: {
-            self.imageView.alpha = 0
-            self.finalScoreLabel.alpha = 0
-            self.confettiView.alpha = 0
-        }, completion: {[weak self] ended in
-            self?.imageView.isHidden = true
-            self?.finalScoreLabel.isHidden = true
-            self?.confettiView.isHidden = true
-        })
     }
 }
 
