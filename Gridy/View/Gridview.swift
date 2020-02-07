@@ -44,8 +44,8 @@ class Gridview: UIView {
         var trailingOffset: CGFloat = leadingOffset
         
         // pass in proper frame
-        let screenWidth: CGFloat = self.frame.width
-        let screenHeight: CGFloat = self.frame.height
+        let screenWidth: CGFloat = self.bounds.width
+        let screenHeight: CGFloat = self.bounds.height
         
         print("Gridview: draw:rect: screenWidth: \(screenWidth)")
         print("Gridview: draw:rect: screenHeight: \(screenHeight)")

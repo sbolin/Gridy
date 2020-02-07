@@ -27,15 +27,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-//    override func viewWillLayoutSubviews() {
-//        super.viewWillLayoutSubviews()
-        
-//        override func viewDidLayoutSubviews() {
-//          super.viewDidLayoutSubviews()
-            
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
                 
         // set up buttons
         let cornerRadius = CGFloat(8)
@@ -51,15 +42,17 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // set up gestures
         configureGestureRecognizer()
-//        gridView.setNeedsDisplay()
-//       gridView.layoutIfNeeded()
         
-        // set up Blurred view
-        setBlurView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        resetView()
+//        setBlurView()
+
     }
     
     func configureGestureRecognizer() {
-        
         // create pan gesture recognizer
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(sender:)))
         panGestureRecognizer.cancelsTouchesInView = true
@@ -78,98 +71,46 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         pinchGestureRecognizer.cancelsTouchesInView = true
         pinchGestureRecognizer.delegate = self
         selectedImage.addGestureRecognizer(pinchGestureRecognizer)
-        //        gridViewStatus()
     }
     
     func setBlurView() {
         let blurView = UIVisualEffectView()
-        blurView.frame = gridView.frame
-        blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.regular)
-        gridView.insertSubview(blurView, at: 0)
+        blurView.frame = view.frame
+        blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) // regular, systemUltraThinMaterial also good
         
         // set up mask
-        let path = UIBezierPath (roundedRect: blurView.frame, cornerRadius: 0)
+        let maskLayer = CAShapeLayer()
+        let path = UIBezierPath (rect: blurView.bounds)
+        
         let rectX = gridView.innerWindowPath.minX
         let rectY = gridView.innerWindowPath.minY
         let rectWidth = gridView.innerWindowPath.width
         let rectHeight = gridView.innerWindowPath.height
-                
+
         let rect = UIBezierPath(rect: CGRect(x: rectX, y: rectY, width: rectWidth, height: rectHeight))
-        
+
         path.append(rect)
-        path.usesEvenOddFillRule = true
-        
-        let maskLayer = CAShapeLayer()
+                
         maskLayer.path = path.cgPath
         maskLayer.fillColor = UIColor.white.cgColor
         maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
         
         blurView.layer.mask = maskLayer
+        blurView.clipsToBounds = true
+        
+        view.addSubview(blurView)
+        
     }
     
     // MARK: - Handle Rotation Transition
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        print("EditorViewController: viewWillTransition:to called\n")
-        coordinator.animate(alongsideTransition: nil) { _ in
-            
-            self.gridView.layoutIfNeeded()
-//            self.setBlurView()
-            
-            print("EditorViewController: viewWillTransition: coordinator: \(coordinator)")
-            print("EditorViewController: viewWillTransition: size.width: \(size.width)")
-            print("EditorViewController: viewWillTransition: size.height: \(size.height)")
-            print("EditorViewController: viewWillTransition: self.view.frame.size: \(self.view.frame.size)")
-            print("EditorViewController: viewWillTransition: gridView.frame: \(self.gridView.frame))")
-            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.size: \(self.gridView.innerWindowPath.size)")
-            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.minX: \(self.gridView.innerWindowPath.minX)")
-            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.minY: \(self.gridView.innerWindowPath.minY)")
-            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.maxX: \(self.gridView.innerWindowPath.maxX)")
-            print("EditorViewController: viewWillTransition: gridView.innerWindowpath.maxY: \(self.gridView.innerWindowPath.maxY)")
-//
-//            self.mainView.setNeedsLayout()
-//            self.mainView.setNeedsDisplay()
-//            self.mainView.layoutIfNeeded()
-            
-//            self.view.setNeedsLayout()
-//            self.view.setNeedsDisplay()
-//            self.view.layoutIfNeeded()
-//            self.gridView.setNeedsLayout()
-//            self.gridView.setNeedsDisplay()
-//            self.gridView.layoutIfNeeded()
-            
-//            self.setBlurView()
-//
-        }
-//        resetView()
-//        selectedImage.image = passedImage
-//        configureGestureRecognizer()
-//
-    }
     
     func resetView() {
         print("resetView\n")
-//                let parent = view.superview
-//                view.removeFromSuperview()
-//                view = nil
-//                parent!.addSubview(gridView)
-//                parent!.addSubview(selectedImage)
-//        // set up initial picture
-//        selectedImage.image = passedImage
-//
-//        // set up gestures
-//        configureGestureRecognizer()
-//
-//        // set up Blurred view
-//        setBlurView()
-        
+        let blurredEffectViews = view.subviews.filter{$0 is UIVisualEffectView}
+        blurredEffectViews.forEach{ blurView in
+            blurView.removeFromSuperview()
+        }
     }
-    
-    //        func gridViewStatus() {
-    //            gridView.isHidden = !gridView.isHidden
-    //            gridView.isOpaque = !gridView.isOpaque
-    //        }
     
     func composeCreationImage() -> UIImage {
         
