@@ -10,14 +10,13 @@ import UIKit
 
 class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet var mainView: UIView!
     @IBOutlet weak var selectedImage: UIImageView!
-    @IBOutlet weak var gridView: Gridview!
+    @IBOutlet weak var maskView: UIView!
+    
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var resetViewButton: UIButton!
     @IBOutlet weak var newPictureButton: UIButton!
     
-    var initialImageViewOffset = CGPoint()
     var currentPostion = CGPoint()
     var selectedImagePixelHeight = CGFloat()
     var selectedImagePixelWidth = CGFloat()
@@ -25,9 +24,12 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     var passedImage = UIImage()
     var imageToPlay = UIImage()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-                
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+        
+    override func viewDidLoad() {
+            super.viewDidLoad()
+                        
         // set up buttons
         let cornerRadius = CGFloat(8)
         startButton.layer.cornerRadius = cornerRadius
@@ -36,22 +38,60 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // set up initial picture
         selectedImage.image = passedImage
-        
         selectedImagePixelWidth = passedImage.size.width
         selectedImagePixelHeight = passedImage.size.height
         
         // set up gestures
         configureGestureRecognizer()
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        resetView()
-//        setBlurView()
-
+        print("viewDidLayoutSubviews")
+        
+        removeBlurEffect()
+        setBlurView()
     }
     
+        //MARK: - Setup blur view, remove blur effects
+        func setBlurView() {
+            let blurView = UIVisualEffectView()
+            blurView.frame = view.frame
+            blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) //systemUltraThinMaterial also good
+            
+            // set up mask
+            let maskLayer = CAShapeLayer()
+            let path = UIBezierPath(rect: blurView.bounds)
+            
+            let maskSide = min(maskView.bounds.width, maskView.bounds.height)
+            let maskSize = CGSize(width: maskView.bounds.width, height: maskView.bounds.height)
+            let maskOrigin = CGPoint(x: CGFloat(view.center.x) - (maskSide / 2),
+                                     y: CGFloat(view.center.y) - (maskSide / 2))
+
+            let mask = UIBezierPath(rect: CGRect(origin: maskOrigin, size: maskSize))
+        
+            path.append(mask)
+            
+            maskLayer.path = path.cgPath
+            maskLayer.fillColor = UIColor.white.cgColor
+            maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+            
+            blurView.layer.mask = maskLayer
+            blurView.clipsToBounds = true
+            
+            view.insertSubview(blurView, belowSubview: maskView)
+    //        view.insertSubview(blurView, at: 1)
+    //        view.addSubview(blurView)
+        }
+            
+        func removeBlurEffect() {
+            let blurredEffectViews = view.subviews.filter{$0 is UIVisualEffectView}
+            blurredEffectViews.forEach{ blurView in
+                blurView.removeFromSuperview()
+            }
+        }
+    
+    //MARK: - Configure Gesture Recognizers
     func configureGestureRecognizer() {
         // create pan gesture recognizer
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(sender:)))
@@ -61,7 +101,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         //create rotation gesture recognizer
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(sender:)))
-        
         rotationGestureRecognizer.cancelsTouchesInView = true
         rotationGestureRecognizer.delegate = self
         selectedImage.addGestureRecognizer(rotationGestureRecognizer)
@@ -73,51 +112,13 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         selectedImage.addGestureRecognizer(pinchGestureRecognizer)
     }
     
-    func setBlurView() {
-        let blurView = UIVisualEffectView()
-        blurView.frame = view.frame
-        blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) // regular, systemUltraThinMaterial also good
-        
-        // set up mask
-        let maskLayer = CAShapeLayer()
-        let path = UIBezierPath (rect: blurView.bounds)
-        
-        let rectX = gridView.innerWindowPath.minX
-        let rectY = gridView.innerWindowPath.minY
-        let rectWidth = gridView.innerWindowPath.width
-        let rectHeight = gridView.innerWindowPath.height
-
-        let rect = UIBezierPath(rect: CGRect(x: rectX, y: rectY, width: rectWidth, height: rectHeight))
-
-        path.append(rect)
-                
-        maskLayer.path = path.cgPath
-        maskLayer.fillColor = UIColor.white.cgColor
-        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-        
-        blurView.layer.mask = maskLayer
-        blurView.clipsToBounds = true
-        
-        view.addSubview(blurView)
-        
-    }
-    
-    // MARK: - Handle Rotation Transition
-    
-    func resetView() {
-        print("resetView\n")
-        let blurredEffectViews = view.subviews.filter{$0 is UIVisualEffectView}
-        blurredEffectViews.forEach{ blurView in
-            blurView.removeFromSuperview()
-        }
-    }
-    
     func composeCreationImage() -> UIImage {
         
         // set up screen capture size
-        let xloc = -gridView.innerWindowPath.minX - 2
-        let yloc = -gridView.innerWindowPath.minY - 2
-        let clipSize = gridView.innerWindowPath.size
+        let xloc = -maskView.frame.minX - 2
+        let yloc = -maskView.frame.minY - 2
+        let clipSize = maskView.frame.size
+        
         let contextSize = view.bounds.size
         let rectSize = CGRect(x: xloc, y: yloc, width: contextSize.width + 4, height: contextSize.height + 4)
         
@@ -145,16 +146,13 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-        
         let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
         let selectedImageScaledHeight = selectedImage.frame.height
         let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
         
-        print("gridView: \(gridView.innerWindowPath.width) x \(gridView.innerWindowPath.height)")
         print("scaled image: \(selectedImageScaledWidth) x \(selectedImageScaledHeight)")
         
-        
-        if (selectedImageScaledWidth > gridView.innerWindowPath.width) && (selectedImageScaledHeight > gridView.innerWindowPath.height) {
+        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
            selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
         }
         sender.scale = 1.0
@@ -183,20 +181,14 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         sender.setTranslation(CGPoint.zero, in: self.view)
         
         if sender.state == .ended {
-            // set up limits on pan - choosenImage must be within by gridView
-            let minX = gridView.innerWindowPath.minX
-            let maxX = gridView.innerWindowPath.maxX
-            let minY = gridView.innerWindowPath.minY
-            let maxY = gridView.innerWindowPath.maxY
-            
+            // set up limits on pan - choosenImage must be within by maskView
             var finalPoint = CGPoint(x: sender.view!.center.x, y: sender.view!.center.y)
-            
-            // get original image size
-//            if let panImage = selectedImage.image {
-//                selectedImagePixelWidth = panImage.size.width
-//                selectedImagePixelHeight = panImage.size.height
-//            }
-            
+
+            let minX = maskView.frame.minX
+            let maxX = maskView.frame.maxX
+            let minY = maskView.frame.minY
+            let maxY = maskView.frame.maxY
+                        
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
             let selectedImageScaledHeight = selectedImage.frame.height

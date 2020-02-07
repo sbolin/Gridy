@@ -52,7 +52,6 @@ class Gridview: UIView {
         
         if screenWidth > screenHeight {
             print("Gridview: Landscape")
-            print("Gridview: innerWindowPath: \(innerWindowPath)")
             innerWindowDepth = screenHeight - leadingOffset - trailingOffset
             innerWindowWidth = innerWindowDepth
             innerWindowTop = leadingOffset
@@ -62,7 +61,6 @@ class Gridview: UIView {
             
         } else {
             print("Gridview: Portrait")
-            print("Gridview: innerWindowPath: \(innerWindowPath)")
             innerWindowWidth = screenWidth - leadingOffset - trailingOffset
             innerWindowDepth = innerWindowWidth
             innerWindowTop = (screenHeight - innerWindowDepth) / 2.0
@@ -102,6 +100,9 @@ class Gridview: UIView {
         windowPath.close()
         
         innerWindowPath = windowPath.bounds
+        print("Gridview: innerWindowPath: \(innerWindowPath)")
+
+        
         
         // Outer window
         windowPath.move(to: CGPoint(x: screenWidth, y: 0))
