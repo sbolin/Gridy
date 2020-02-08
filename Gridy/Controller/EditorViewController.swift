@@ -54,35 +54,35 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
         //MARK: - Setup blur view, remove blur effects
-        func setBlurView() {
-            let blurView = UIVisualEffectView()
-            blurView.frame = view.frame
-            blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) //systemUltraThinMaterial also good
-            
-            // set up mask
-            let maskLayer = CAShapeLayer()
-            let path = UIBezierPath(rect: blurView.bounds)
-            
-            let maskSide = min(maskView.bounds.width, maskView.bounds.height)
-            let maskSize = CGSize(width: maskView.bounds.width, height: maskView.bounds.height)
-            let maskOrigin = CGPoint(x: CGFloat(view.center.x) - (maskSide / 2),
-                                     y: CGFloat(view.center.y) - (maskSide / 2))
-
-            let mask = UIBezierPath(rect: CGRect(origin: maskOrigin, size: maskSize))
+    func setBlurView() {
+        let blurView = UIVisualEffectView()
+        blurView.frame = view.frame
+        blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) //systemUltraThinMaterial also good
         
-            path.append(mask)
-            
-            maskLayer.path = path.cgPath
-            maskLayer.fillColor = UIColor.white.cgColor
-            maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-            
-            blurView.layer.mask = maskLayer
-            blurView.clipsToBounds = true
-            
-            view.insertSubview(blurView, belowSubview: maskView)
-    //        view.insertSubview(blurView, at: 1)
-    //        view.addSubview(blurView)
-        }
+        // set up mask
+        let maskLayer = CAShapeLayer()
+        let path = UIBezierPath(rect: view.bounds)
+        
+        let maskSide = min(maskView.bounds.width, maskView.bounds.height)
+        let maskSize = CGSize(width: maskView.bounds.width, height: maskView.bounds.height)
+        let maskOrigin = CGPoint(x: CGFloat(view.center.x) - (maskSide / 2),
+                                 y: CGFloat(view.center.y) - (maskSide / 2))
+        
+        let mask = UIBezierPath(rect: CGRect(origin: maskOrigin, size: maskSize))
+        
+        path.append(mask)
+        
+        maskLayer.path = path.cgPath
+        maskLayer.fillColor = UIColor.white.cgColor
+        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+        
+        blurView.layer.mask = maskLayer
+        blurView.clipsToBounds = true
+        
+        //        view.insertSubview(blurView, belowSubview: selectedImage)
+        view.insertSubview(blurView, at: 1)
+        //        view.addSubview(blurView)
+    }
             
         func removeBlurEffect() {
             let blurredEffectViews = view.subviews.filter{$0 is UIVisualEffectView}
@@ -158,6 +158,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         sender.scale = 1.0
     }
     
+    // MARK: - GestureRecognizers Protocols
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // conditions for simulanious gestures
         if gestureRecognizer.view != selectedImage {

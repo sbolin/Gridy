@@ -192,7 +192,6 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         })
     }
     
-    
     //MARK: - Handle Share at end of game
     @IBAction func shareButtonTapped(_ sender: UIButton) {
         displaySharingOptions(sender: sender)
