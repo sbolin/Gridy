@@ -26,16 +26,10 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
         let cornerRadius = CGFloat(8)
         
         gridyPickButton.layer.cornerRadius = cornerRadius
-//        gridyPickButton.layer.borderWidth = 1
-//       gridyPickButton.layer.borderColor = (UIColor(named: "#95989A") as! CGColor)
         
         cameraPickButton.layer.cornerRadius = cornerRadius
-//        cameraPickButton.layer.borderWidth = 1
-//        cameraPickButton.layer.borderColor = (UIColor(named: "#95989A") as! CGColor)
         
         photoLibraryPickButton.layer.cornerRadius = cornerRadius
-//        photoLibraryPickButton.layer.borderWidth = 1
-//        photoLibraryPickButton.layer.borderColor = (UIColor(named: "#95989A") as! CGColor)
 
         // Do any additional setup after loading the view.
         collectLocalImageSet()

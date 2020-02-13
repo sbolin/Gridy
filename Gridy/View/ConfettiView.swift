@@ -62,6 +62,4 @@ class ConfettiView: UIView {
         confettiEmitter.emitterCells = [red_near, green_near, blue_near, yellow_near, cyan_near, purple_near, orange_near, red_mid, green_mid, blue_mid, yellow_mid, red_far, green_far, blue_far]
         
     }
-    
-    
 }

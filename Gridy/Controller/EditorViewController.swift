@@ -52,6 +52,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
         //MARK: - Setup blur view, remove blur effects
     func setBlurView() {
+        
         blurView.removeFromSuperview()
         blurView.frame = view.frame
         blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) //systemUltraThinMaterial also good
@@ -166,9 +167,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
 
         moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
 
-        sender.setTranslation(CGPoint.zero, in: self.view)
+        sender.setTranslation(CGPoint.zero, in: view)
         
         if sender.state == .ended {
+            
             // set up limits on pan - choosenImage must be within by maskView
             var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
 
@@ -176,17 +178,44 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             let maxX = maskView.frame.maxX
             let minY = maskView.frame.minY
             let maxY = maskView.frame.maxY
-                        
+            
+            let leadingEdge = finalPoint.x - moveableView.bounds.width / 2
+            let trailingEdge = finalPoint.x + moveableView.bounds.width / 2
+            let topEdge = finalPoint.y - moveableView.bounds.height / 2
+            let bottomEdge = finalPoint.y + moveableView.bounds.height / 2
+            
+            print("minX = \(minX)")
+            print("maxX = \(maxX)")
+            print("minY = \(minY)")
+            print("maxY = \(maxY)")
+            print("\n")
+            print("leadingEdge = \(leadingEdge)")
+            print("trailingEdge = \(trailingEdge)")
+            print("topEdge = \(topEdge)")
+            print("bottomEdge = \(bottomEdge)")
+
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
             let selectedImageScaledHeight = moveableView.frame.height
             let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
             
-            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
-            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
-            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
-            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
+            print("selectedImageAspectRatio = \(selectedImageAspectRatio)")
+            print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
+            print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
+
+//            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
+//            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
+//            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
+//            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
             
+            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
+            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
+            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
+            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
+            
+            print("finalPoint.x = \(finalPoint.x)")
+            print("finalPoint.y = \(finalPoint.y)")
+
             UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
                            animations: { moveableView.center = finalPoint },
                            completion: nil)
