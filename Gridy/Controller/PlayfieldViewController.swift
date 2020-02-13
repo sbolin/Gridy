@@ -28,6 +28,8 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     
     @IBOutlet weak var confettiView: UIView!
     
+    let cornerRadius = CGFloat(8)
+    
     //MARK: - Properties
     
     var score = Int()
@@ -92,7 +94,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         shareButton.isEnabled = false
         confettiView.isHidden = true
         
-        let cornerRadius = CGFloat(8)
+
         newGameButton.layer.cornerRadius = cornerRadius
         
         self.blipPlayer = self.loadSound(filename: "blip")
@@ -163,7 +165,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         confetti.clipsToBounds = true
         
         shareButton.isHidden = false
-        shareButton.layer.cornerRadius = 12.0
+        shareButton.layer.cornerRadius = cornerRadius
         shareButton.isEnabled = true
         gamePieceView.dragInteractionEnabled = false
         playfieldView.dragInteractionEnabled = false

@@ -23,9 +23,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var passedImage = UIImage()
     var imageToPlay = UIImage()
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
+    var blurView = UIVisualEffectView()
         
     override func viewDidLoad() {
             super.viewDidLoad()
@@ -49,13 +47,12 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLayoutSubviews()
         print("viewDidLayoutSubviews")
         
-        removeBlurEffect()
         setBlurView()
     }
     
         //MARK: - Setup blur view, remove blur effects
     func setBlurView() {
-        let blurView = UIVisualEffectView()
+        blurView.removeFromSuperview()
         blurView.frame = view.frame
         blurView.effect = UIBlurEffect(style: UIBlurEffect.Style.light) //systemUltraThinMaterial also good
         
@@ -79,17 +76,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         blurView.layer.mask = maskLayer
         blurView.clipsToBounds = true
         
-        //        view.insertSubview(blurView, belowSubview: selectedImage)
         view.insertSubview(blurView, at: 1)
-        //        view.addSubview(blurView)
     }
-            
-        func removeBlurEffect() {
-            let blurredEffectViews = view.subviews.filter{$0 is UIVisualEffectView}
-            blurredEffectViews.forEach{ blurView in
-                blurView.removeFromSuperview()
-            }
-        }
     
     //MARK: - Configure Gesture Recognizers
     func configureGestureRecognizer() {
@@ -97,19 +85,19 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(sender:)))
         panGestureRecognizer.cancelsTouchesInView = true
         panGestureRecognizer.delegate = self
-        selectedImage.addGestureRecognizer(panGestureRecognizer)
-        
+        view.addGestureRecognizer(panGestureRecognizer)
+
         //create rotation gesture recognizer
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(sender:)))
         rotationGestureRecognizer.cancelsTouchesInView = true
         rotationGestureRecognizer.delegate = self
-        selectedImage.addGestureRecognizer(rotationGestureRecognizer)
-        
+        view.addGestureRecognizer(rotationGestureRecognizer)
+
         //create scale gesture recognizer
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(sender:)))
         pinchGestureRecognizer.cancelsTouchesInView = true
         pinchGestureRecognizer.delegate = self
-        selectedImage.addGestureRecognizer(pinchGestureRecognizer)
+        view.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     func composeCreationImage() -> UIImage {
@@ -161,9 +149,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - GestureRecognizers Protocols
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // conditions for simulanious gestures
-        if gestureRecognizer.view != selectedImage {
-            return false
-        }
+        if gestureRecognizer.view != selectedImage { return false }
         // neither of the recognized gestures should be a tap gesture
         if gestureRecognizer is UITapGestureRecognizer
             || otherGestureRecognizer is UITapGestureRecognizer {
@@ -174,16 +160,17 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK: - GestureRecognizer functions
     @objc func moveImageView(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: selectedImage.superview)
         
-        if let view = sender.view {
-            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-        }
+        guard let moveableView = selectedImage else { return }
+        let translation = sender.translation(in: moveableView.superview)
+
+        moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
+
         sender.setTranslation(CGPoint.zero, in: self.view)
         
         if sender.state == .ended {
             // set up limits on pan - choosenImage must be within by maskView
-            var finalPoint = CGPoint(x: sender.view!.center.x, y: sender.view!.center.y)
+            var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
 
             let minX = maskView.frame.minX
             let maxX = maskView.frame.maxX
@@ -192,7 +179,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                         
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-            let selectedImageScaledHeight = selectedImage.frame.height
+            let selectedImageScaledHeight = moveableView.frame.height
             let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
             
             if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
@@ -201,7 +188,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
             
             UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
-                           animations: { sender.view!.center = finalPoint },
+                           animations: { moveableView.center = finalPoint },
                            completion: nil)
         }
     }

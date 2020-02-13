@@ -23,7 +23,7 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cornerRadius = CGFloat(12)
+        let cornerRadius = CGFloat(8)
         
         gridyPickButton.layer.cornerRadius = cornerRadius
 //        gridyPickButton.layer.borderWidth = 1
