@@ -184,37 +184,75 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             let topEdge = finalPoint.y - moveableView.bounds.height / 2
             let bottomEdge = finalPoint.y + moveableView.bounds.height / 2
             
-            print("minX = \(minX)")
-            print("maxX = \(maxX)")
-            print("minY = \(minY)")
-            print("maxY = \(maxY)")
+            let moveableViewWidth = moveableView.bounds.width
+            let moveableViewHeight = moveableView.bounds.height
+            
             print("\n")
             print("leadingEdge = \(leadingEdge)")
+            print("minX = \(minX)")
+            
             print("trailingEdge = \(trailingEdge)")
+            print("maxX = \(maxX)")
+
             print("topEdge = \(topEdge)")
+            print("minY = \(minY)")
+
             print("bottomEdge = \(bottomEdge)")
+            print("maxY = \(maxY)")
+            print("\n")
 
             // calculate scaled image (as scalled to fit within choosenImage view)
             let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
             let selectedImageScaledHeight = moveableView.frame.height
             let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
             
-            print("selectedImageAspectRatio = \(selectedImageAspectRatio)")
+            print("moveableView.width: \(moveableView.bounds.size.width)")
+            print("moveableView.height: \(moveableView.bounds.size.height)")
+
             print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
             print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
+            print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
+            print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
+            print("\n")
+            
+            var scaledHeight = moveableViewHeight
+            var scaledWidth = moveableViewWidth
+            
+            let ratio = selectedImagePixelWidth / selectedImagePixelHeight
+            if moveableViewWidth > moveableViewHeight {
+                if ratio >= 1.333 {
+                    scaledHeight = moveableViewWidth * ratio
+                } else {
+                    scaledWidth = moveableViewHeight * (1 / ratio)
+                }
+            } else {
+                if ratio >= 0.75 {
+                    scaledWidth = moveableViewHeight * ratio
+                } else {
+                    scaledHeight = moveableViewWidth * (1 / ratio)
+                }
+            }
+            
+
 
 //            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
 //            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
 //            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
 //            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
             
-            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
-            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
-            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
-            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
+//            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
+//            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
+//            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
+//            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
+            
+            if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
+            if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
+            if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
+            if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
             
             print("finalPoint.x = \(finalPoint.x)")
             print("finalPoint.y = \(finalPoint.y)")
+            print("\n")
 
             UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
                            animations: { moveableView.center = finalPoint },
