@@ -115,7 +115,6 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
 //    MARK: Handle device rotation during play
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        print("viewWillTransition:to")
         coordinator.animate(alongsideTransition: nil) { _ in
                 guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
                 playfieldFlow.invalidateLayout()

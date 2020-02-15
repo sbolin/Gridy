@@ -45,7 +45,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("viewDidLayoutSubviews")
         
         setBlurView()
     }
@@ -151,42 +150,19 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 let moveableViewWidth = moveableView.frame.width
                 let moveableViewHeight = moveableView.frame.height
-
-                // calculate scaled image (as scalled to fit within choosenImage view)
-//                let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-//                let selectedImageScaledHeight = moveableView.frame.height
-//                let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
-                
-                let selectedImageScaledHeight = selectedImage.bounds.height
-                let selectedImageScaledWidth = selectedImage.bounds.width
-                
-                print("moveableView bound width: \(moveableView.bounds.size.width)")
-                print("moveableView bound height: \(moveableView.bounds.size.height)")
-                print("moveableView frame width: \(moveableView.frame.size.width)")
-                print("moveableView frame height: \(moveableView.frame.size.height)")
-                print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
-                print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
-                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
-                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
-                
+                let selectedImageScaledHeight = selectedImage.frame.height
+                let selectedImageScaledWidth = selectedImage.frame.width
                 var scaledWidth = moveableViewWidth
                 var scaledHeight = moveableViewHeight
-                
                 let ratio = selectedImagePixelWidth / selectedImagePixelHeight
-                
-//                if moveableViewWidth > moveableViewHeight {
-//                    if ratio >= 1.333 {
-//                        scaledHeight = moveableViewWidth * ratio
-//                    } else {
-//                        scaledWidth = moveableViewHeight * (1 / ratio)
-//                    }
-//                } else {
-//                    if ratio < 1.333 {
-//                        scaledWidth = moveableViewHeight * ratio
-//                    } else {
-//                        scaledHeight = moveableViewWidth * (1 / ratio)
-//                    }
-//                }
+
+                print("moveableView frame width: \(moveableView.frame.size.width)")
+                print("moveableView frame height: \(moveableView.frame.size.height)")
+                print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
+                print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
+                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
+                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
+                print("selectedImagePixelWidth / selectedImagePixelHeight ratio: \(ratio)")
                 
                 
                 if selectedImageScaledWidth == moveableViewWidth {
@@ -194,11 +170,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                 } else {
                     scaledWidth = selectedImageScaledWidth
                 }
-                
-    //            let leadingEdge = finalPoint.x - moveableViewWidth / 2
-    //            let trailingEdge = finalPoint.x + moveableViewWidth / 2
-    //            let topEdge = finalPoint.y - moveableViewHeight / 2
-    //            let bottomEdge = finalPoint.y + moveableViewHeight / 2
                 
                 let leadingEdge = finalPoint.x - scaledWidth / 2
                 let trailingEdge = finalPoint.x + scaledWidth / 2
@@ -216,16 +187,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
 
                 print("bottomEdge = \(bottomEdge)")
                 print("maxY = \(maxY)")
-
-    //            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
-    //            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
-    //            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
-    //            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
-                
-    //            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
-    //            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
-    //            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
-    //            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
                 
                 if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
                 if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }

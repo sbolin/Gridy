@@ -17,7 +17,6 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
         let pieceSpacing:CGFloat = 3
         
         if (collectionView == gamePieceView) {
-            print("gamePieceView flow")
 
             let maxGamePiece: CGFloat = 6
             let minGamePiece: CGFloat = 3
@@ -35,7 +34,6 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             return gamePieceCellSize
         } else {
-            print("playfieldView flow")
             let gamePiece: CGFloat = 4
             let playFieldViewDim1: CGFloat = collectionView.bounds.width
             let playFieldViewDim2: CGFloat = collectionView.bounds.height

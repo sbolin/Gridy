@@ -16,10 +16,8 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         let destinationIndexPath: IndexPath
         if let indexPath = coordinator.destinationIndexPath {
             if indexPath.item > 15 { return }
-            print("Drop at location")
             destinationIndexPath = indexPath // drop at location
         } else {
-            print("Drop at end of collectionView")
             destinationIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0) - 1, section: 0)
             // drop at end of collectionView if no drop location
         }
@@ -31,7 +29,6 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         case .move:
             guard let dragCoordinator = coordinator.session.localDragSession?.localContext as? PieceDragCoordinator else { return }
             if let sourceIndexPath = item.sourceIndexPath {
-                print("Moving within the same collectionView...")
                 
                 dragCoordinator.isReordering = true
                 collectionView.performBatchUpdates({
@@ -44,13 +41,10 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
                     checkIfGameOver(dataSource: dataSource)
                 })
             } else {
-                print("Moving between collection views")
                 
-//                if let destinationDataSource = playfieldView.dataSource as? PieceDataSource,
                 if let destinationDataSource = collectionView.dataSource as? PieceDataSource,
                     let image = destinationDataSource.getItemAtIndex(indexPath: destinationIndexPath.item) {
                     if !image.isEqual(blankImage) {
-                        print("Moving to existing image, don't move")
                         return
                     }
                 }
