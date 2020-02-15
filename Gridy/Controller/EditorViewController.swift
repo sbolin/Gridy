@@ -36,6 +36,9 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // set up initial picture
         selectedImage.image = passedImage
+        //
+        selectedImage.clipsToBounds = false
+        //
         selectedImagePixelWidth = passedImage.size.width
         selectedImagePixelHeight = passedImage.size.height
         
@@ -150,21 +153,43 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 let moveableViewWidth = moveableView.frame.width
                 let moveableViewHeight = moveableView.frame.height
-                let selectedImageScaledHeight = selectedImage.frame.height
-                let selectedImageScaledWidth = selectedImage.frame.width
+                let selectedImageScaledWidth = selectedImage.bounds.width
+                let selectedImageScaledHeight = selectedImage.bounds.height
                 var scaledWidth = moveableViewWidth
                 var scaledHeight = moveableViewHeight
                 let ratio = selectedImagePixelWidth / selectedImagePixelHeight
-
+                
+                if moveableViewHeight > moveableViewWidth {  // Portrait, ratio < 1.0
+                    scaledWidth = scaledHeight
+                    scaledHeight /= ratio
+                } else {                                     // Landscape, ratui > 1.0
+                    scaledHeight = scaledWidth
+                    scaledWidth *= ratio
+                }
+                
+//                let wScale = selectedImageScaledWidth / selectedImagePixelWidth
+//                let hScale = selectedImageScaledHeight / selectedImagePixelHeight
+//
+//                if hScale < wScale {
+//                    scaledWidth = moveableViewHeight * ratio
+//                } else {
+//                    scaledHeight = moveableViewWidth / ratio
+//                }
+                print("\n")
+                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
+                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
                 print("moveableView frame width: \(moveableView.frame.size.width)")
                 print("moveableView frame height: \(moveableView.frame.size.height)")
                 print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
                 print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
-                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
-                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
+                print("scaledWidth = \(scaledWidth)")
+                print("scaledHeight = \(scaledHeight)")
+                print("\n")
+//                print("wScale (selectedImageScaledWidth / selectedImagePixelWidth) = \(wScale)")
+//                print("hScale (selectedImageScaledHeight / selectedImagePixelHeight) = \(hScale)")
                 print("selectedImagePixelWidth / selectedImagePixelHeight ratio: \(ratio)")
-                
-                
+                print("\n")
+
                 if selectedImageScaledWidth == moveableViewWidth {
                     scaledHeight = moveableViewWidth / ratio
                 } else {
