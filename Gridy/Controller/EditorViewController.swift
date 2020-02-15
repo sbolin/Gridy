@@ -129,22 +129,135 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - GestureRecognizers
+    // Move
+    @objc func moveImageView(sender: UIPanGestureRecognizer) {
+            
+            guard let moveableView = selectedImage else { return }
+            let translation = sender.translation(in: moveableView.superview)
+
+            moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
+
+            sender.setTranslation(CGPoint.zero, in: view)
+            
+            if sender.state == .ended {
+                
+                // set up limits on pan - choosenImage must be within by maskView
+                var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
+
+                let minX = maskView.frame.minX
+                let maxX = maskView.frame.maxX
+                let minY = maskView.frame.minY
+                let maxY = maskView.frame.maxY
+                
+                let moveableViewWidth = moveableView.frame.width
+                let moveableViewHeight = moveableView.frame.height
+
+                // calculate scaled image (as scalled to fit within choosenImage view)
+//                let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
+//                let selectedImageScaledHeight = moveableView.frame.height
+//                let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
+                
+                let selectedImageScaledHeight = selectedImage.bounds.height
+                let selectedImageScaledWidth = selectedImage.bounds.width
+                
+                print("moveableView bound width: \(moveableView.bounds.size.width)")
+                print("moveableView bound height: \(moveableView.bounds.size.height)")
+                print("moveableView frame width: \(moveableView.frame.size.width)")
+                print("moveableView frame height: \(moveableView.frame.size.height)")
+                print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
+                print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
+                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
+                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
+                
+                var scaledWidth = moveableViewWidth
+                var scaledHeight = moveableViewHeight
+                
+                let ratio = selectedImagePixelWidth / selectedImagePixelHeight
+                
+//                if moveableViewWidth > moveableViewHeight {
+//                    if ratio >= 1.333 {
+//                        scaledHeight = moveableViewWidth * ratio
+//                    } else {
+//                        scaledWidth = moveableViewHeight * (1 / ratio)
+//                    }
+//                } else {
+//                    if ratio < 1.333 {
+//                        scaledWidth = moveableViewHeight * ratio
+//                    } else {
+//                        scaledHeight = moveableViewWidth * (1 / ratio)
+//                    }
+//                }
+                
+                
+                if selectedImageScaledWidth == moveableViewWidth {
+                    scaledHeight = moveableViewWidth / ratio
+                } else {
+                    scaledWidth = selectedImageScaledWidth
+                }
+                
+    //            let leadingEdge = finalPoint.x - moveableViewWidth / 2
+    //            let trailingEdge = finalPoint.x + moveableViewWidth / 2
+    //            let topEdge = finalPoint.y - moveableViewHeight / 2
+    //            let bottomEdge = finalPoint.y + moveableViewHeight / 2
+                
+                let leadingEdge = finalPoint.x - scaledWidth / 2
+                let trailingEdge = finalPoint.x + scaledWidth / 2
+                let topEdge = finalPoint.y - scaledHeight / 2
+                let bottomEdge = finalPoint.y + scaledHeight / 2
+                
+                print("leadingEdge = \(leadingEdge)")
+                print("minX = \(minX)")
+                
+                print("trailingEdge = \(trailingEdge)")
+                print("maxX = \(maxX)")
+
+                print("topEdge = \(topEdge)")
+                print("minY = \(minY)")
+
+                print("bottomEdge = \(bottomEdge)")
+                print("maxY = \(maxY)")
+
+    //            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
+    //            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
+    //            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
+    //            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
+                
+    //            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
+    //            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
+    //            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
+    //            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
+                
+                if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
+                if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
+                if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
+                if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
+                
+                print("finalPoint.x = \(finalPoint.x)")
+                print("finalPoint.y = \(finalPoint.y)")
+
+                UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
+                               animations: { moveableView.center = finalPoint },
+                               completion: nil)
+            }
+        }
+    
+    // rotate
     @objc func rotateImageView(sender: UIRotationGestureRecognizer) {
         selectedImage.transform = selectedImage.transform.rotated(by: sender.rotation)
         sender.rotation = 0
     }
     
+    // scale
     @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-        let selectedImageScaledHeight = selectedImage.frame.height
-        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
+//        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
+//        let selectedImageScaledHeight = selectedImage.frame.height
+//        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
         
-        print("scaled image: \(selectedImageScaledWidth) x \(selectedImageScaledHeight)")
-        
-        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
-           selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
-        }
-        sender.scale = 1.0
+//        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
+//        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        print("scale: \(sender.scale)")
+            selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+            sender.scale = 1.0
     }
     
     // MARK: - GestureRecognizers Protocols
@@ -159,116 +272,20 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         return true
     }
     
-    //MARK: - GestureRecognizer functions
-    @objc func moveImageView(sender: UIPanGestureRecognizer) {
-        
-        guard let moveableView = selectedImage else { return }
-        let translation = sender.translation(in: moveableView.superview)
-
-        moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
-
-        sender.setTranslation(CGPoint.zero, in: view)
-        
-        if sender.state == .ended {
-            
-            // set up limits on pan - choosenImage must be within by maskView
-            var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
-
-            let minX = maskView.frame.minX
-            let maxX = maskView.frame.maxX
-            let minY = maskView.frame.minY
-            let maxY = maskView.frame.maxY
-            
-            let leadingEdge = finalPoint.x - moveableView.bounds.width / 2
-            let trailingEdge = finalPoint.x + moveableView.bounds.width / 2
-            let topEdge = finalPoint.y - moveableView.bounds.height / 2
-            let bottomEdge = finalPoint.y + moveableView.bounds.height / 2
-            
-            let moveableViewWidth = moveableView.bounds.width
-            let moveableViewHeight = moveableView.bounds.height
-            
-            print("\n")
-            print("leadingEdge = \(leadingEdge)")
-            print("minX = \(minX)")
-            
-            print("trailingEdge = \(trailingEdge)")
-            print("maxX = \(maxX)")
-
-            print("topEdge = \(topEdge)")
-            print("minY = \(minY)")
-
-            print("bottomEdge = \(bottomEdge)")
-            print("maxY = \(maxY)")
-            print("\n")
-
-            // calculate scaled image (as scalled to fit within choosenImage view)
-            let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-            let selectedImageScaledHeight = moveableView.frame.height
-            let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
-            
-            print("moveableView.width: \(moveableView.bounds.size.width)")
-            print("moveableView.height: \(moveableView.bounds.size.height)")
-
-            print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
-            print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
-            print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
-            print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
-            print("\n")
-            
-            var scaledHeight = moveableViewHeight
-            var scaledWidth = moveableViewWidth
-            
-            let ratio = selectedImagePixelWidth / selectedImagePixelHeight
-            if moveableViewWidth > moveableViewHeight {
-                if ratio >= 1.333 {
-                    scaledHeight = moveableViewWidth * ratio
-                } else {
-                    scaledWidth = moveableViewHeight * (1 / ratio)
-                }
-            } else {
-                if ratio >= 0.75 {
-                    scaledWidth = moveableViewHeight * ratio
-                } else {
-                    scaledHeight = moveableViewWidth * (1 / ratio)
-                }
-            }
-            
-
-
-//            if finalPoint.x - selectedImageScaledWidth / 2 > minX { finalPoint.x = minX +  selectedImageScaledWidth / 2 }
-//            if finalPoint.x + selectedImageScaledWidth / 2 < maxX { finalPoint.x = maxX - selectedImageScaledWidth / 2 }
-//            if finalPoint.y - selectedImageScaledHeight / 2 > minY { finalPoint.y = minY + selectedImageScaledHeight / 2 }
-//            if finalPoint.y + selectedImageScaledHeight / 2 < maxY { finalPoint.y = maxY - selectedImageScaledHeight / 2 }
-            
-//            if leadingEdge > minX { finalPoint.x = minX + moveableView.bounds.width / 2 }
-//            if trailingEdge < maxX { finalPoint.x = maxX - moveableView.bounds.width / 2 }
-//            if topEdge > minY { finalPoint.y = minY +  moveableView.bounds.height / 2 }
-//            if bottomEdge < maxY { finalPoint.y = maxY -  moveableView.bounds.height / 2 }
-            
-            if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
-            if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
-            if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
-            if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
-            
-            print("finalPoint.x = \(finalPoint.x)")
-            print("finalPoint.y = \(finalPoint.y)")
-            print("\n")
-
-            UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
-                           animations: { moveableView.center = finalPoint },
-                           completion: nil)
-        }
-    }
-    
     //MARK: - Actions
+    // start
     @IBAction func startTapped(_ sender: UIButton) {
         imageToPlay = composeCreationImage()
         performSegue(withIdentifier: "toGame", sender: self)
     }
-    
+    // reset
     @IBAction func resetTapped(_ sender: UIButton) {
-        selectedImage.transform = selectedImage.transform.translatedBy(x: -currentPostion.x, y: -currentPostion.y)
+        
+        let moveX = view.center.x - selectedImage.center.x
+        let moveY = view.center.y - selectedImage.center.y
+        selectedImage.transform = selectedImage.transform.translatedBy(x: moveX, y: moveY)
     }
+    // new picture
     @IBAction func newPictureTapped(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
     }
