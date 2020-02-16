@@ -228,6 +228,12 @@
                                     <accessibilityTraits key="traits" image="YES" updatesFrequently="YES"/>
                                 </accessibility>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Grid" translatesAutoresizingMaskIntoConstraints="NO" id="pYS-gU-ZZL">
+                                <rect key="frame" x="72" y="200" width="624" height="624"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                </accessibility>
+                            </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkU-gi-cIE" userLabel="maskView">
                                 <rect key="frame" x="72" y="200" width="624" height="624"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -325,16 +331,20 @@ zoom, rotate, reposition</string>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" id="MAT-a0-lae"/>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="leading" secondItem="Ef3-d1-JBx" secondAttribute="leading" id="MZP-0T-8to"/>
                             <constraint firstItem="jkU-gi-cIE" firstAttribute="width" secondItem="Ef3-d1-JBx" secondAttribute="width" multiplier="0.8" id="TsQ-32-rHX"/>
+                            <constraint firstItem="pYS-gU-ZZL" firstAttribute="top" secondItem="jkU-gi-cIE" secondAttribute="top" id="XeY-UV-vuY"/>
                             <constraint firstItem="ppc-gf-ggS" firstAttribute="bottom" secondItem="Ef3-d1-JBx" secondAttribute="bottom" id="XfF-KF-fgP"/>
                             <constraint firstItem="jkU-gi-cIE" firstAttribute="centerX" secondItem="Ef3-d1-JBx" secondAttribute="centerX" id="Ywa-7A-SFA"/>
                             <constraint firstItem="R0y-ct-cIt" firstAttribute="centerX" secondItem="Ef3-d1-JBx" secondAttribute="centerX" id="aGI-he-6XO"/>
+                            <constraint firstItem="pYS-gU-ZZL" firstAttribute="leading" secondItem="jkU-gi-cIE" secondAttribute="leading" id="bca-QS-FdE"/>
                             <constraint firstItem="R0y-ct-cIt" firstAttribute="bottom" secondItem="6Pg-KX-0oi" secondAttribute="bottom" constant="-8" id="fTE-s3-4jm">
                                 <variation key="heightClass=regular-widthClass=regular" constant="-16"/>
                             </constraint>
+                            <constraint firstItem="pYS-gU-ZZL" firstAttribute="trailing" secondItem="jkU-gi-cIE" secondAttribute="trailing" id="pJE-mz-LjB"/>
                             <constraint firstItem="82a-Fe-ifF" firstAttribute="trailing" secondItem="R0y-ct-cIt" secondAttribute="trailing" id="rzw-a7-0oE"/>
                             <constraint firstItem="jkU-gi-cIE" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" priority="999" constant="64" id="t0h-nH-kIN">
                                 <variation key="heightClass=regular-widthClass=regular" constant="64"/>
                             </constraint>
+                            <constraint firstItem="pYS-gU-ZZL" firstAttribute="bottom" secondItem="jkU-gi-cIE" secondAttribute="bottom" id="taV-LT-MBH"/>
                             <constraint firstItem="jkU-gi-cIE" firstAttribute="top" secondItem="Ef3-d1-JBx" secondAttribute="top" priority="999" constant="60" id="uXp-jR-QGm"/>
                             <constraint firstItem="82a-Fe-ifF" firstAttribute="centerX" secondItem="6Pg-KX-0oi" secondAttribute="centerX" id="usa-2e-EBw"/>
                             <constraint firstItem="jkU-gi-cIE" firstAttribute="centerY" secondItem="Ef3-d1-JBx" secondAttribute="centerY" id="vSX-q1-fPw"/>
@@ -789,6 +799,7 @@ zoom, rotate, reposition</string>
         </scene>
     </scenes>
     <resources>
+        <image name="Grid" width="1030" height="1030"/>
         <image name="Gridy-camera-green" width="36" height="28"/>
         <image name="Gridy-library-green" width="36" height="28"/>
         <image name="Gridy-lookup" width="36" height="28"/>

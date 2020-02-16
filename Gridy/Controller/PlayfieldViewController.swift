@@ -260,12 +260,12 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
             paragraphStyle.alignment = .center
             let textColor = UIColor(named: "#1A936F")
             let attrs1: [NSAttributedString.Key: Any] = [
-                .font: UIFont(name: "TimeBurner", size: 44)!,
+                .font: UIFont(name: "TimeBurner", size: 42)!,
                 .foregroundColor: textColor!,
                 .paragraphStyle: paragraphStyle
             ]
             let attrs2: [NSAttributedString.Key: Any] = [
-                .font: UIFont(name: "TimeBurner", size: 44)!,
+                .font: UIFont(name: "TimeBurner", size: 42)!,
                 .foregroundColor: UIColor.lightGray,
                 .paragraphStyle: paragraphStyle
             ]

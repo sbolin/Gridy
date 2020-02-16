@@ -28,7 +28,6 @@
 		15AA04A523A4143D00ADD610 /* blip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15AA04A323A4143D00ADD610 /* blip.mp3 */; };
 		15ADE9A723E43B2C003EAF73 /* UIImage+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ADE9A623E43B2C003EAF73 /* UIImage+Border.swift */; };
 		15CD949D237FBB100040AD7C /* timeburnernormal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 152DB6752375E1C60085609E /* timeburnernormal.ttf */; };
-		15E6475E2390150500E74F1E /* Gridview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E6475D2390150500E74F1E /* Gridview.swift */; };
 		15E8D6FD23C93A4200A68DEC /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E8D6FC23C93A4200A68DEC /* ConfettiView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +55,6 @@
 		15AA04A223A4143D00ADD610 /* bloop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bloop.mp3; path = Assets.xcassets/bloop.mp3; sourceTree = "<group>"; };
 		15AA04A323A4143D00ADD610 /* blip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = blip.mp3; path = Assets.xcassets/blip.mp3; sourceTree = "<group>"; };
 		15ADE9A623E43B2C003EAF73 /* UIImage+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Border.swift"; sourceTree = "<group>"; };
-		15E6475D2390150500E74F1E /* Gridview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridview.swift; sourceTree = "<group>"; };
 		15E8D6FC23C93A4200A68DEC /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +115,6 @@
 				152DB6302375C3700085609E /* Main.storyboard */,
 				15E8D6FC23C93A4200A68DEC /* ConfettiView.swift */,
 				1596EA73239AC7B3002AD485 /* PieceCell.swift */,
-				15E6475D2390150500E74F1E /* Gridview.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -235,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				155F8F1A23923E760001A2AA /* UIImage+Crop.swift in Sources */,
-				15E6475E2390150500E74F1E /* Gridview.swift in Sources */,
 				152DB62B2375C3700085609E /* AppDelegate.swift in Sources */,
 				15E8D6FD23C93A4200A68DEC /* ConfettiView.swift in Sources */,
 				155F8F202392BF920001A2AA /* PlayfieldViewController+CollectionViewDelegateFlowLayout.swift in Sources */,

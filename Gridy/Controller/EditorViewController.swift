@@ -157,69 +157,27 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
                 let selectedImageScaledHeight = selectedImage.bounds.height
                 var scaledWidth = moveableViewWidth
                 var scaledHeight = moveableViewHeight
-                let ratio = selectedImagePixelWidth / selectedImagePixelHeight
                 
-                if moveableViewHeight > moveableViewWidth {  // Portrait, ratio < 1.0
-                    scaledWidth = scaledHeight
-                    scaledHeight /= ratio
-                } else {                                     // Landscape, ratui > 1.0
-                    scaledHeight = scaledWidth
-                    scaledWidth *= ratio
-                }
-                
-//                let wScale = selectedImageScaledWidth / selectedImagePixelWidth
-//                let hScale = selectedImageScaledHeight / selectedImagePixelHeight
-//
-//                if hScale < wScale {
-//                    scaledWidth = moveableViewHeight * ratio
-//                } else {
-//                    scaledHeight = moveableViewWidth / ratio
-//                }
-                print("\n")
-                print("selectedImagePixelWidth = \(selectedImagePixelWidth)")
-                print("selectedImagePixelHeight = \(selectedImagePixelHeight)")
-                print("moveableView frame width: \(moveableView.frame.size.width)")
-                print("moveableView frame height: \(moveableView.frame.size.height)")
-                print("selectedImageScaledWidth = \(selectedImageScaledWidth)")
-                print("selectedImageScaledHeight = \(selectedImageScaledHeight)")
-                print("scaledWidth = \(scaledWidth)")
-                print("scaledHeight = \(scaledHeight)")
-                print("\n")
-//                print("wScale (selectedImageScaledWidth / selectedImagePixelWidth) = \(wScale)")
-//                print("hScale (selectedImageScaledHeight / selectedImagePixelHeight) = \(hScale)")
-                print("selectedImagePixelWidth / selectedImagePixelHeight ratio: \(ratio)")
-                print("\n")
+                let wScale = selectedImageScaledWidth / selectedImagePixelWidth
+                let hScale = selectedImageScaledHeight / selectedImagePixelHeight
 
-                if selectedImageScaledWidth == moveableViewWidth {
-                    scaledHeight = moveableViewWidth / ratio
+                if hScale > wScale {
+                    scaledHeight = hScale * selectedImagePixelHeight
+                    scaledWidth = hScale * selectedImagePixelWidth
                 } else {
-                    scaledWidth = selectedImageScaledWidth
+                    scaledHeight = wScale * selectedImagePixelHeight
+                    scaledWidth = wScale * selectedImagePixelWidth
                 }
-                
+
                 let leadingEdge = finalPoint.x - scaledWidth / 2
                 let trailingEdge = finalPoint.x + scaledWidth / 2
                 let topEdge = finalPoint.y - scaledHeight / 2
                 let bottomEdge = finalPoint.y + scaledHeight / 2
                 
-                print("leadingEdge = \(leadingEdge)")
-                print("minX = \(minX)")
-                
-                print("trailingEdge = \(trailingEdge)")
-                print("maxX = \(maxX)")
-
-                print("topEdge = \(topEdge)")
-                print("minY = \(minY)")
-
-                print("bottomEdge = \(bottomEdge)")
-                print("maxY = \(maxY)")
-                
                 if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
                 if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
                 if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
                 if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
-                
-                print("finalPoint.x = \(finalPoint.x)")
-                print("finalPoint.y = \(finalPoint.y)")
 
                 UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
                                animations: { moveableView.center = finalPoint },
