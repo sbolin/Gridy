@@ -12,11 +12,10 @@ import LinkPresentation
 
 class PlayfieldViewController: UIViewController, UIActivityItemSource {
     
-//class PlayfieldViewController: UIViewController {
+    //class PlayfieldViewController: UIViewController {
     //MARK: - Outlets
     
     @IBOutlet weak var pieceStackView: UIStackView!
-    
     @IBOutlet weak var gamePieceView: UICollectionView!
     @IBOutlet weak var playfieldView: UICollectionView!
     @IBOutlet weak var imageView: UIImageView!
@@ -94,7 +93,6 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         shareButton.isEnabled = false
         confettiView.isHidden = true
         
-
         newGameButton.layer.cornerRadius = cornerRadius
         
         self.blipPlayer = self.loadSound(filename: "blip")
@@ -112,19 +110,26 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         }
     }
     
-//    MARK: Handle device rotation during play
+    //    MARK: Handle device rotation during play
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+//        guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+//        playfieldFlow.invalidateLayout()
+//        gamePieceFlow.invalidateLayout()
+//    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: nil) { _ in
-                guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-                playfieldFlow.invalidateLayout()
-                guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-                gamePieceFlow.invalidateLayout()
-            }
-        
+            guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            playfieldFlow.invalidateLayout()
+            guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            gamePieceFlow.invalidateLayout()
+        }
     }
     
-// MARK: - Navigation
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
@@ -146,7 +151,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         })
     }
     
-// MARK: - Game Over Check
+    // MARK: - Game Over Check
     // check if dataSource is the same as baseImage, handle game over if true
     func checkIfGameOver(dataSource: PieceDataSource) {
         if dataSource.pieceCollection == baseImage {
@@ -210,7 +215,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         metadata.imageProvider = NSItemProvider(object: shareImage)
         
         let items = [shareImage as Any, shareSubject as Any, shareNote as Any]
-//        let items = [self]
+        //        let items = [self]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         
         // excluded activity types, if any
@@ -227,7 +232,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         present(activityViewController, animated: true, completion: nil)
     }
     
-// MARK: - Methods to conform to UIActivityItemSource Protocols
+    // MARK: - Methods to conform to UIActivityItemSource Protocols
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
         return "Gridy!"
     }
@@ -239,17 +244,17 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
             return "\(shareNote) GridyApp from OpenClassrooms"
         }
     }
-        func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
-            return "Gridy Score!"
-        }
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        return "Gridy Score!"
+    }
     
-        func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType: UIActivity.ActivityType?, suggestedSize: CGSize) -> UIImage? {
-            return shareImage
-        }
+    func activityViewController(_ activityViewController: UIActivityViewController, thumbnailImageForActivityType: UIActivity.ActivityType?, suggestedSize: CGSize) -> UIImage? {
+        return shareImage
+    }
     
-        func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
-            return metadata
-        }
+    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+        return metadata
+    }
     
     func composeShareImage() -> UIImage {
         

@@ -21,6 +21,7 @@ extension PlayfieldViewController: UICollectionViewDragDelegate {
         let dragCoordinator = PieceDragCoordinator(sourceIndexPath: indexPath)
         session.localContext = dragCoordinator
         self.blipPlayer?.play()
+        
         return dataSource.dragItems(for: indexPath)
     }
     

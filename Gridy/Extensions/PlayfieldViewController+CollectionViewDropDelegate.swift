@@ -17,6 +17,7 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         if let indexPath = coordinator.destinationIndexPath {
             if indexPath.item > 15 { return }
             destinationIndexPath = indexPath // drop at location
+
         } else {
             destinationIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0) - 1, section: 0)
             // drop at end of collectionView if no drop location
@@ -29,7 +30,6 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
         case .move:
             guard let dragCoordinator = coordinator.session.localDragSession?.localContext as? PieceDragCoordinator else { return }
             if let sourceIndexPath = item.sourceIndexPath {
-                
                 dragCoordinator.isReordering = true
                 collectionView.performBatchUpdates({
                     dataSource.swapItem(at: sourceIndexPath.item, to: destinationIndexPath.item)
@@ -41,21 +41,19 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
                     checkIfGameOver(dataSource: dataSource)
                 })
             } else {
-                
                 if let destinationDataSource = collectionView.dataSource as? PieceDataSource,
                     let image = destinationDataSource.getItemAtIndex(indexPath: destinationIndexPath.item) {
                     if !image.isEqual(blankImage) {
                         return
                     }
                 }
-                
                 dragCoordinator.isReordering = false
                 if let piece = item.dragItem.localObject as? UIImage {
                     collectionView.performBatchUpdates({
                         if destinationIndexPath.item > 15 { return }
-                        dataSource.deleteItem(at: destinationIndexPath.item) // added
+                        dataSource.deleteItem(at: destinationIndexPath.item)
                         dataSource.addItem(piece, at: destinationIndexPath.item)
-                        collectionView.deleteItems(at: [destinationIndexPath]) // added
+                        collectionView.deleteItems(at: [destinationIndexPath])
                         collectionView.insertItems(at: [destinationIndexPath])
                         self.bloopPlayer?.play()
                         addToScore()

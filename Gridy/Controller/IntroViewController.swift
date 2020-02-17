@@ -11,7 +11,7 @@ import Photos
 import AVFoundation
 
 class IntroViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
-
+    
     @IBOutlet weak var gridyPickButton: UIButton!
     @IBOutlet weak var cameraPickButton: UIButton!
     @IBOutlet weak var photoLibraryPickButton: UIButton!
@@ -30,11 +30,11 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
         cameraPickButton.layer.cornerRadius = cornerRadius
         
         photoLibraryPickButton.layer.cornerRadius = cornerRadius
-
+        
         // Do any additional setup after loading the view.
         collectLocalImageSet()
     }
-
+    
     // MARK: - Navigation
     @IBAction func gridyPickTouched(_ sender: UIButton) {
         pickRandom()
@@ -50,7 +50,7 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEditor" {
-          let destinationVC = segue.destination as! EditorViewController
+            let destinationVC = segue.destination as! EditorViewController
             // pass image to EditorViewController
             destinationVC.passedImage = imageToPass
         }
@@ -117,11 +117,11 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
     func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         
         DispatchQueue.main.async {
-          let imagePicker = UIImagePickerController()
-          imagePicker.delegate = self
-          imagePicker.sourceType = sourceType
-
-          self.present(imagePicker, animated: true, completion: nil)
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = sourceType
+            
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     

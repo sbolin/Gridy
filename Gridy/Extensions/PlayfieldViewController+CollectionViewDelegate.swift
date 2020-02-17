@@ -34,4 +34,3 @@ extension PlayfieldViewController: UICollectionViewDelegate {
         return UIEdgeInsets(top: edgeInsets, left: edgeInsets, bottom: edgeInsets, right: edgeInsets)
     }
 }
-// control-command-space: brings up the 😀 keyboard

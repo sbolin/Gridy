@@ -24,10 +24,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     var passedImage = UIImage()
     var imageToPlay = UIImage()
     var blurView = UIVisualEffectView()
-        
+    
     override func viewDidLoad() {
-            super.viewDidLoad()
-                        
+        super.viewDidLoad()
+        
         // set up buttons
         let cornerRadius = CGFloat(8)
         startButton.layer.cornerRadius = cornerRadius
@@ -52,7 +52,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         setBlurView()
     }
     
-        //MARK: - Setup blur view, remove blur effects
+    //MARK: - Setup blur view, remove blur effects
     func setBlurView() {
         
         blurView.removeFromSuperview()
@@ -89,13 +89,13 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         panGestureRecognizer.cancelsTouchesInView = true
         panGestureRecognizer.delegate = self
         view.addGestureRecognizer(panGestureRecognizer)
-
+        
         //create rotation gesture recognizer
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateImageView(sender:)))
         rotationGestureRecognizer.cancelsTouchesInView = true
         rotationGestureRecognizer.delegate = self
         view.addGestureRecognizer(rotationGestureRecognizer)
-
+        
         //create scale gesture recognizer
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleImageView(sender:)))
         pinchGestureRecognizer.cancelsTouchesInView = true
@@ -133,57 +133,57 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - GestureRecognizers
     // Move
     @objc func moveImageView(sender: UIPanGestureRecognizer) {
+        
+        guard let moveableView = selectedImage else { return }
+        let translation = sender.translation(in: moveableView.superview)
+        
+        moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
+        
+        sender.setTranslation(CGPoint.zero, in: view)
+        
+        if sender.state == .ended {
             
-            guard let moveableView = selectedImage else { return }
-            let translation = sender.translation(in: moveableView.superview)
-
-            moveableView.center = CGPoint(x: moveableView.center.x + translation.x, y: moveableView.center.y + translation.y)
-
-            sender.setTranslation(CGPoint.zero, in: view)
+            // set up limits on pan - choosenImage must be within by maskView
+            var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
             
-            if sender.state == .ended {
-                
-                // set up limits on pan - choosenImage must be within by maskView
-                var finalPoint = CGPoint(x: moveableView.center.x, y: moveableView.center.y)
-
-                let minX = maskView.frame.minX
-                let maxX = maskView.frame.maxX
-                let minY = maskView.frame.minY
-                let maxY = maskView.frame.maxY
-                
-                let moveableViewWidth = moveableView.frame.width
-                let moveableViewHeight = moveableView.frame.height
-                let selectedImageScaledWidth = selectedImage.bounds.width
-                let selectedImageScaledHeight = selectedImage.bounds.height
-                var scaledWidth = moveableViewWidth
-                var scaledHeight = moveableViewHeight
-                
-                let wScale = selectedImageScaledWidth / selectedImagePixelWidth
-                let hScale = selectedImageScaledHeight / selectedImagePixelHeight
-
-                if hScale > wScale {
-                    scaledHeight = hScale * selectedImagePixelHeight
-                    scaledWidth = hScale * selectedImagePixelWidth
-                } else {
-                    scaledHeight = wScale * selectedImagePixelHeight
-                    scaledWidth = wScale * selectedImagePixelWidth
-                }
-
-                let leadingEdge = finalPoint.x - scaledWidth / 2
-                let trailingEdge = finalPoint.x + scaledWidth / 2
-                let topEdge = finalPoint.y - scaledHeight / 2
-                let bottomEdge = finalPoint.y + scaledHeight / 2
-                
-                if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
-                if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
-                if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
-                if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
-
-                UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
-                               animations: { moveableView.center = finalPoint },
-                               completion: nil)
+            let minX = maskView.frame.minX
+            let maxX = maskView.frame.maxX
+            let minY = maskView.frame.minY
+            let maxY = maskView.frame.maxY
+            
+            let moveableViewWidth = moveableView.frame.width
+            let moveableViewHeight = moveableView.frame.height
+            let selectedImageScaledWidth = selectedImage.bounds.width
+            let selectedImageScaledHeight = selectedImage.bounds.height
+            var scaledWidth = moveableViewWidth
+            var scaledHeight = moveableViewHeight
+            
+            let wScale = selectedImageScaledWidth / selectedImagePixelWidth
+            let hScale = selectedImageScaledHeight / selectedImagePixelHeight
+            
+            if hScale > wScale {
+                scaledHeight = hScale * selectedImagePixelHeight
+                scaledWidth = hScale * selectedImagePixelWidth
+            } else {
+                scaledHeight = wScale * selectedImagePixelHeight
+                scaledWidth = wScale * selectedImagePixelWidth
             }
+            
+            let leadingEdge = finalPoint.x - scaledWidth / 2
+            let trailingEdge = finalPoint.x + scaledWidth / 2
+            let topEdge = finalPoint.y - scaledHeight / 2
+            let bottomEdge = finalPoint.y + scaledHeight / 2
+            
+            if leadingEdge > minX { finalPoint.x = minX + scaledWidth / 2 }
+            if trailingEdge < maxX { finalPoint.x = maxX - scaledWidth / 2 }
+            if topEdge > minY { finalPoint.y = minY +  scaledHeight / 2 }
+            if bottomEdge < maxY { finalPoint.y = maxY -  scaledHeight / 2 }
+            
+            UIView.animate(withDuration: 1.0, delay: 0, options: UIView.AnimationOptions.curveEaseOut,
+                           animations: { moveableView.center = finalPoint },
+                           completion: nil)
         }
+    }
     
     // rotate
     @objc func rotateImageView(sender: UIRotationGestureRecognizer) {
@@ -193,15 +193,15 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // scale
     @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-//        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-//        let selectedImageScaledHeight = selectedImage.frame.height
-//        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
+        //        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
+        //        let selectedImageScaledHeight = selectedImage.frame.height
+        //        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
         
-//        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
-//        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        //        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
+        //        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
         print("scale: \(sender.scale)")
-            selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
-            sender.scale = 1.0
+        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
+        sender.scale = 1.0
     }
     
     // MARK: - GestureRecognizers Protocols

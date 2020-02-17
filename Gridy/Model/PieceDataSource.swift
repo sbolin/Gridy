@@ -25,7 +25,6 @@ class PieceDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PieceCell", for: indexPath) as? PieceCell else {
             fatalError("Cell cannot be created")
         }
