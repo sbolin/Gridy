@@ -36,8 +36,8 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     var selectedImage = UIImage()
     var baseImage = [UIImage]()
     
-    var blipPlayer: AVAudioPlayer? = nil
-    var bloopPlayer: AVAudioPlayer? = nil
+    var blipPlayer: AVAudioPlayer!
+    var bloopPlayer: AVAudioPlayer!
     
     
     // Sharing items
