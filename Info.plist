@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>$(PRODUCT_NAME) Needs access to your Documents to take save Gridy Results.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) Needs access to your Camera to take pictures to include in Gridy.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

@@ -111,13 +111,6 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }
     
     //    MARK: Handle device rotation during play
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-//        guard let gamePieceFlow = self.gamePieceView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-//        playfieldFlow.invalidateLayout()
-//        gamePieceFlow.invalidateLayout()
-//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -210,20 +203,16 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         shareImage = composeShareImage()
         
         metadata.title = shareNote
-        metadata.url = URL(fileURLWithPath: "Gridy.io")
+        metadata.originalURL = URL(string: "Gridy.io")
+        metadata.url = metadata.originalURL
         metadata.iconProvider = NSItemProvider(contentsOf: Bundle.main.url(forResource: "AppIcon", withExtension: "jpg"))
         metadata.imageProvider = NSItemProvider(object: shareImage)
-        
-        let items = [shareImage as Any, shareSubject as Any, shareNote as Any]
-        //        let items = [self]
+
+//        let items = [shareImage as Any, shareSubject as Any, shareNote as Any]
+//        let items = [shareImage, shareSubject, shareNote] as [Any]
+
+        let items = [shareImage, self]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        
-        // excluded activity types, if any
-        //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook]
-        //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTwitter]
-        //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToWeibo]
-        //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToTencentWeibo]
-        //        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFlickr]
         
         // bandaid for iPad
         activityViewController.popoverPresentationController?.sourceView = sender as? UIView
@@ -253,7 +242,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }
     
     func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
-        return metadata
+        return self.metadata
     }
     
     func composeShareImage() -> UIImage {

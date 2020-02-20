@@ -48,6 +48,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        view.layoutIfNeeded()
         
         setBlurView()
     }
@@ -199,7 +200,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         //        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
         //        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
-        print("scale: \(sender.scale)")
         selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
         sender.scale = 1.0
     }
