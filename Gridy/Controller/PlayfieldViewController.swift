@@ -112,9 +112,14 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }
     
     //    MARK: Handle device rotation during play
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        let playfieldFlow = playfieldView.collectionViewLayout
+//        let gamePieceFlow = gamePieceView.collectionViewLayout
+//        playfieldFlow.invalidateLayout()
+//        gamePieceFlow.invalidateLayout()
+//
+//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -137,7 +142,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     
     // MARK: - Show hint pic, then fade out
     @IBAction func quickViewTapped(_ sender: UIButton) {
-        score -= 1
+        score += 1
         scoreLabel.text = "\(score)"
 
         imageView.isHidden = false
