@@ -89,7 +89,8 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         imageView.image = selectedImage
         imageView.isHidden = true
         finalScoreLabel.isHidden = true
-        shareButton.isHidden = true
+        shareButton.layer.backgroundColor = UIColor(named: "#C6DABF")?.cgColor
+        shareButton.layer.cornerRadius = cornerRadius
         shareButton.isEnabled = false
         confettiView.isHidden = true
         
@@ -111,6 +112,9 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }
     
     //    MARK: Handle device rotation during play
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -133,11 +137,14 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     
     // MARK: - Show hint pic, then fade out
     @IBAction func quickViewTapped(_ sender: UIButton) {
+        score -= 1
+        scoreLabel.text = "\(score)"
+
         imageView.isHidden = false
         imageView.image = selectedImage
         
         imageView.alpha = 1
-        UIView.animate(withDuration: 3.0, delay: 0.0, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: 3.5, delay: 0.0, options: [.curveEaseOut], animations: {
             self.imageView.alpha = 0
         }, completion: {[weak self] ended in
             self?.imageView.isHidden = true
@@ -160,9 +167,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         confetti.translatesAutoresizingMaskIntoConstraints = false
         confettiView.addSubview(confetti)
         confetti.clipsToBounds = true
-        
-        shareButton.isHidden = false
-        shareButton.layer.cornerRadius = cornerRadius
+        shareButton.layer.backgroundColor = UIColor(named: "#88D498")?.cgColor
         shareButton.isEnabled = true
         gamePieceView.dragInteractionEnabled = false
         playfieldView.dragInteractionEnabled = false
