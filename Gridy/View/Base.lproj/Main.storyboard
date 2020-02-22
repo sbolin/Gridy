@@ -554,19 +554,19 @@ zoom, rotate, reposition</string>
                                                 <variation key="heightClass=regular" hidden="YES"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" text="Drag pieces from above to below" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRn-4F-Ge6">
-                                                <rect key="frame" x="-24.5" y="15.5" width="186.5" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <rect key="frame" x="-37.5" y="15.5" width="212.5" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" name="#95989A"/>
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 <variation key="heightClass=compact" hidden="YES"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0P-pq-Jti">
-                                                <rect key="frame" x="28.5" y="221" width="80" height="34"/>
+                                                <rect key="frame" x="36.5" y="221" width="64" height="34"/>
                                                 <color key="backgroundColor" name="#C6DABF"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="64" id="OpG-Wl-chp"/>
                                                     <constraint firstAttribute="height" constant="34" id="ihF-3H-KQC"/>
-                                                    <constraint firstAttribute="width" constant="80" identifier="ShareButtonWidth" id="ncD-iS-Xpc"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Share">
@@ -672,7 +672,7 @@ zoom, rotate, reposition</string>
                             </constraint>
                             <constraint firstItem="Sbz-2Q-hiz" firstAttribute="centerX" secondItem="aB2-0z-n0z" secondAttribute="centerX" identifier="PieceStackCenterX" id="J6x-Jb-k8M"/>
                             <constraint firstItem="S3n-NS-TTG" firstAttribute="trailing" secondItem="Sbz-2Q-hiz" secondAttribute="trailing" constant="-3" id="NZd-zX-GM1"/>
-                            <constraint firstItem="Sbz-2Q-hiz" firstAttribute="leading" secondItem="ZGK-Xx-vge" secondAttribute="leading" constant="16" identifier="PieceStackLeading" id="Pyb-nr-Nc3"/>
+                            <constraint firstItem="Sbz-2Q-hiz" firstAttribute="leading" secondItem="ZGK-Xx-vge" secondAttribute="leading" priority="999" constant="16" identifier="PieceStackLeading" id="Pyb-nr-Nc3"/>
                             <constraint firstItem="TBX-Zb-OSQ" firstAttribute="trailing" secondItem="Sbz-2Q-hiz" secondAttribute="trailing" constant="-3" identifier="ConfettiViewTrailing" id="Up3-sP-d4c"/>
                             <constraint firstItem="TBX-Zb-OSQ" firstAttribute="width" secondItem="a9X-u6-3eR" secondAttribute="width" constant="-6" identifier="ConfettiViewWidth" id="aTg-sf-dXq"/>
                             <constraint firstItem="TBX-Zb-OSQ" firstAttribute="bottom" secondItem="Sbz-2Q-hiz" secondAttribute="bottom" constant="-3" identifier="ConfettiViewBottom" id="bOd-lk-Fpg"/>
@@ -682,7 +682,7 @@ zoom, rotate, reposition</string>
                             <constraint firstItem="C2U-kh-gdm" firstAttribute="top" secondItem="ZGK-Xx-vge" secondAttribute="top" constant="4" identifier="TopStackTop" id="fbd-sh-MB1">
                                 <variation key="heightClass=regular-widthClass=regular" constant="8"/>
                             </constraint>
-                            <constraint firstItem="Sbz-2Q-hiz" firstAttribute="trailing" secondItem="ZGK-Xx-vge" secondAttribute="trailing" constant="-16" identifier="PieceStackTrailingTypical" id="mnS-ge-Zaq"/>
+                            <constraint firstItem="Sbz-2Q-hiz" firstAttribute="trailing" secondItem="ZGK-Xx-vge" secondAttribute="trailing" priority="999" constant="-16" identifier="PieceStackTrailingTypical" id="mnS-ge-Zaq"/>
                             <constraint firstItem="S3n-NS-TTG" firstAttribute="leading" secondItem="a9X-u6-3eR" secondAttribute="leading" constant="3" id="rzF-Ly-oHG"/>
                             <constraint firstItem="Sbz-2Q-hiz" firstAttribute="leading" secondItem="aB2-0z-n0z" secondAttribute="leading" priority="999" constant="100" identifier="PieceStackLeadingIPAD" id="sQW-yk-orv"/>
                             <constraint firstItem="C2U-kh-gdm" firstAttribute="trailing" secondItem="ZGK-Xx-vge" secondAttribute="trailing" constant="-9" identifier="TopStackTrailing" id="y5O-gh-sYt">
