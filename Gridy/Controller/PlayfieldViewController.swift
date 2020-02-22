@@ -81,7 +81,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         return player
     }
     
-    // MARK: - View Lifecycle
+//MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,15 +111,15 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         }
     }
     
-    //    MARK: Handle device rotation during play
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
+//MARK: Handle device rotation during play
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 //        let playfieldFlow = playfieldView.collectionViewLayout
 //        let gamePieceFlow = gamePieceView.collectionViewLayout
 //        playfieldFlow.invalidateLayout()
 //        gamePieceFlow.invalidateLayout()
 //
-//    }
+    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

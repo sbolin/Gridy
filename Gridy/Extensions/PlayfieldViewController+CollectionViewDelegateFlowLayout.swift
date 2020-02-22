@@ -38,7 +38,7 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let playFieldViewDim1: CGFloat = collectionView.bounds.width
             let playFieldViewDim2: CGFloat = collectionView.bounds.height
             
-            let spacing = 2 * edgeSpacing + ((gamePiece - 1) * pieceSpacing)
+            let spacing = 2 * edgeSpacing + (gamePiece - 1) * pieceSpacing
             
             let minDim = (playFieldViewDim1 < playFieldViewDim2 ? playFieldViewDim1 : playFieldViewDim2) - spacing
             let cellDim = minDim / gamePiece
@@ -48,11 +48,11 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {

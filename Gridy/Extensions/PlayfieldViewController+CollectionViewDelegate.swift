@@ -16,7 +16,7 @@ extension PlayfieldViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.layer.borderColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-            cell.layer.borderWidth = 3.0
+            cell.layer.borderWidth = 2.0
         }
     }
     
