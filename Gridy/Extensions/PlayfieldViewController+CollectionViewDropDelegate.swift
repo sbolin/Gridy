@@ -22,9 +22,7 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
             destinationIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0) - 1, section: 0)
             // drop at end of collectionView if no drop location
         }
-        
-        let blankImage = UIImage(named: "Blank")
-        
+
         let item = coordinator.items[0] // select the first drag item
         switch coordinator.proposal.operation {
         case .move:
@@ -43,7 +41,7 @@ extension PlayfieldViewController: UICollectionViewDropDelegate {
             } else {
                 if let destinationDataSource = collectionView.dataSource as? PieceDataSource,
                     let image = destinationDataSource.getItemAtIndex(indexPath: destinationIndexPath.item) {
-                    if !image.isEqual(blankImage) {
+                    if !image.isEqual(PieceDataSource.blankImage) {
                         return
                     }
                 }

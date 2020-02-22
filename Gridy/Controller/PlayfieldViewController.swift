@@ -64,7 +64,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     }()
     
     private lazy var playFieldDataSource: PieceDataSource = {
-        guard let blankImage = UIImage(named: "Blank") else { return PieceDataSource(pieceCollection: []) }
+        guard let blankImage = PieceDataSource.blankImage else { return PieceDataSource(pieceCollection: []) }
         let blankPieceCollection = [UIImage](repeating: blankImage, count: 16)
         return PieceDataSource(pieceCollection: blankPieceCollection)
     }()
@@ -123,6 +123,13 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+//
+//        gamePieceView.collectionViewLayout.invalidateLayout()
+//        playfieldView.collectionViewLayout.invalidateLayout()
+//
+//        gamePieceView.reloadData()
+//        playfieldView.reloadData()
+//
         coordinator.animate(alongsideTransition: nil) { _ in
             guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
             playfieldFlow.invalidateLayout()
@@ -130,6 +137,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
             gamePieceFlow.invalidateLayout()
         }
     }
+    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

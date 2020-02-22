@@ -8,10 +8,11 @@
 
 import UIKit
 
-// MARK: - UICollectionViewDataSource
+//MARK: - UICollectionViewDataSource
 
 class PieceDataSource: NSObject, UICollectionViewDataSource {
     
+    static let blankImage = UIImage(named: "Blank")
     //MARK: - Properties
     var pieceCollection: [UIImage]
     

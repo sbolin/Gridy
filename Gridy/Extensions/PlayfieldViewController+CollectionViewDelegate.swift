@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: UICollectionViewDelegate
+//MARK: UICollectionViewDelegate
 
 extension PlayfieldViewController: UICollectionViewDelegate {
     

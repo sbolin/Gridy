@@ -35,7 +35,7 @@ class IntroViewController: UIViewController, UINavigationControllerDelegate, UII
         collectLocalImageSet()
     }
     
-    // MARK: - Navigation
+//MARK: - Navigation
     @IBAction func gridyPickTouched(_ sender: UIButton) {
         pickRandom()
     }
