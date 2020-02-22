@@ -114,21 +114,10 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
 //MARK: Handle device rotation during play
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        let playfieldFlow = playfieldView.collectionViewLayout
-//        let gamePieceFlow = gamePieceView.collectionViewLayout
-//        playfieldFlow.invalidateLayout()
-//        gamePieceFlow.invalidateLayout()
-//
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-//
-//        gamePieceView.collectionViewLayout.invalidateLayout()
-//        playfieldView.collectionViewLayout.invalidateLayout()
-//
-//        gamePieceView.reloadData()
-//        playfieldView.reloadData()
 //
         coordinator.animate(alongsideTransition: nil) { _ in
             guard let playfieldFlow = self.playfieldView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
@@ -157,7 +146,7 @@ class PlayfieldViewController: UIViewController, UIActivityItemSource {
         imageView.image = selectedImage
         
         imageView.alpha = 1
-        UIView.animate(withDuration: 3.5, delay: 0.0, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: 4.0, delay: 0.0, options: [.curveEaseOut], animations: {
             self.imageView.alpha = 0
         }, completion: {[weak self] ended in
             self?.imageView.isHidden = true
