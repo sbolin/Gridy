@@ -17,7 +17,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var resetViewButton: UIButton!
     @IBOutlet weak var newPictureButton: UIButton!
     
-    var currentPostion = CGPoint()
     var selectedImagePixelHeight = CGFloat()
     var selectedImagePixelWidth = CGFloat()
     
@@ -194,14 +193,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // scale
     @objc func scaleImageView(sender: UIPinchGestureRecognizer) {
-        // TODO: Fix?
-        //        let selectedImageAspectRatio = selectedImagePixelWidth / selectedImagePixelHeight
-        //        let selectedImageScaledHeight = selectedImage.frame.height
-        //        let selectedImageScaledWidth = selectedImageAspectRatio * selectedImageScaledHeight
-        
-        //        if (selectedImageScaledWidth > maskView.frame.width) && (selectedImageScaledHeight > maskView.frame.height) {
-        //        selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
-        
         selectedImage.transform = selectedImage.transform.scaledBy(x: sender.scale, y: sender.scale)
         sender.scale = 1.0
     }
@@ -227,9 +218,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     // reset
     @IBAction func resetTapped(_ sender: UIButton) {
         
-        let moveX = view.center.x - selectedImage.center.x
-        let moveY = view.center.y - selectedImage.center.y
-        selectedImage.transform = selectedImage.transform.translatedBy(x: moveX, y: moveY)
+        selectedImage.transform = CGAffineTransform.identity
+        
     }
     // new picture
     @IBAction func newPictureTapped(_ sender: UIButton) {
