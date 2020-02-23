@@ -30,7 +30,7 @@ extension PlayfieldViewController: UICollectionViewDelegate {
     //MARK: - Inset cells slightly so background shows up
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
     {
-        let edgeInsets: CGFloat = 3.0
+        let edgeInsets: CGFloat = 4.0 //CHANGED FROM 3.0
         return UIEdgeInsets(top: edgeInsets, left: edgeInsets, bottom: edgeInsets, right: edgeInsets)
     }
 }

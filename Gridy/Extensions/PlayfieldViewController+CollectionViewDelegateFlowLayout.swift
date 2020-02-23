@@ -13,8 +13,8 @@ import UIKit
 extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let edgeSpacing:CGFloat = 3
-        let pieceSpacing:CGFloat = 3
+        let edgeSpacing:CGFloat = 4.0 // CHANGED FROM 3.0
+        let pieceSpacing:CGFloat = 3.0
         
         if (collectionView == gamePieceView) {
 
