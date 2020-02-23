@@ -13,10 +13,10 @@ import UIKit
 extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let edgeSpacing:CGFloat = 4.0 // CHANGED FROM 3.0
-        let pieceSpacing:CGFloat = 3.0
-        
         if (collectionView == gamePieceView) {
+            
+            let edgeSpacing:CGFloat = 5.0 // CHANGED FROM 3.0
+            let pieceSpacing:CGFloat = 5.0
 
             let maxGamePiece: CGFloat = 6
             let minGamePiece: CGFloat = 3
@@ -34,6 +34,10 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
             let gamePieceCellSize = CGSize(width: cellDim, height: cellDim)
             return gamePieceCellSize
         } else {
+            
+            let edgeSpacing:CGFloat = 1.0 // CHANGED FROM 3.0
+            let pieceSpacing:CGFloat = 1.0
+            
             let gamePiece: CGFloat = 4
             let playFieldViewDim1: CGFloat = collectionView.bounds.width
             let playFieldViewDim2: CGFloat = collectionView.bounds.height
@@ -48,11 +52,19 @@ extension PlayfieldViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        if (collectionView == gamePieceView) {
+            return 5
+        } else {
+            return 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        if (collectionView == gamePieceView) {
+            return 5
+        } else {
+            return 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
